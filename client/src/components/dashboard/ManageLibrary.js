@@ -9,7 +9,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
-import 'react-bootstrap'
+import 'react-bootstrap';
 
 class ManageLibrary extends Component {
   onLogoutClick = e => {
@@ -49,16 +49,16 @@ class ManageLibrary extends Component {
           <div className="container-fluid">
             <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
               <div className="row">
-                <div className="col-xs-4">
+                <div className="col col-sm-3 ">
                   <ListGroup variant="flush">
-                    <ListGroup.Item action href="#link1">Audit Logs</ListGroup.Item>
-                    <ListGroup.Item action href="#link2">Settings</ListGroup.Item>
-                    <ListGroup.Item action href="#link3">Users</ListGroup.Item>
-                    <ListGroup.Item action href="#link4">Loans</ListGroup.Item>
-                    <ListGroup.Item action href="#link5">Books</ListGroup.Item>
+                    <ListGroup.Item action href="#link1" className="p-4 d-flex justify-content-around">Audit Logs</ListGroup.Item>
+                    <ListGroup.Item action href="#link2" className="p-4 d-flex justify-content-around">Settings</ListGroup.Item>
+                    <ListGroup.Item action href="#link3" className="p-4 d-flex justify-content-around">Users</ListGroup.Item>
+                    <ListGroup.Item action href="#link4" className="p-4 d-flex justify-content-around">Loans</ListGroup.Item>
+                    <ListGroup.Item action href="#link5" className="p-4 d-flex justify-content-around">Books</ListGroup.Item>
                   </ListGroup>
                 </div>
-                <div className="col-xs-8">
+                <div className="col col-sm-9">
                   <Tab.Content>
                   
                     <Tab.Pane eventKey="#link1">
@@ -92,9 +92,6 @@ class ManageLibrary extends Component {
               <div className="col-xs-9">
 
               </div> */}
-
-         
-
           </div>
       </div>
     );
