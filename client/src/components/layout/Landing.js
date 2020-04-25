@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
   render() {
     return (
+      <div className="container-fluid">
+        {/* <img src="assets/images/backgroundimage.png"></img> */}
         <div className="row">
           <div className="col s12 center-align">
             <br />
-              <div className="row">
+              <div className="row justify-content-center">
                   <img src={require("./Logo.png")}/>
               </div>
             <div className="row">
@@ -19,7 +21,7 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn mb-2 waves-effect waves-light hoverable purple accent-3"
+                className="btn mb-2 waves-effect waves-light hoverable blue accent-3"
               >
                 Log In
               </Link>
@@ -27,6 +29,7 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }

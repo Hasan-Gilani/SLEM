@@ -1,43 +1,25 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Book from "../layout/Book";
 
 class FindForm extends Component{
     constructor(props){
         super(props);
         this.state = {
             isbn: "",
-            book_view: false,
-            book_form: null
+            book: []
         }
     }
-
     onChange = e => {
-        this.setState({
-            [e.target.id]: e.target.value,
-
-        })
+        this.setState({ [e.target.id]: e.target.value })
     };
-    make_call = () => {
-        return axios
+    onFindPress = e => {
+        axios
             .get(`/api/books/findbook/${this.state.isbn}`)
             .then( (response) => {
-                return response.data
-            }).catch(err => console.log(err))
-    }
-    onFindPress = () => {
-        this.make_call().then(data => {
-            if(data[0]){
-                this.setState({
-                    book_view: true,
-                    book_form: <Book isbn={data[0].isbn} name={data[0].name}
-                                     author={data[0].author} subject={data[0].subject}/>
-                });
-            }
-            else{
-                this.setState({book_view: false})
-            }
-        })
+                this.setState({book: response.data});
+                console.log(this.state.book)
+            })
+            .catch(err => console.log(err))
     };
     render() {
         return (
@@ -70,9 +52,6 @@ class FindForm extends Component{
                                 Find
                             </button>
                         </form>
-                        <div className="detail_form">
-                            {(this.state.book_view) ? this.state.book_form : ''}
-                        </div>
                     </div>
                 </div>
             </div>

@@ -91,7 +91,11 @@ class AddForm extends Component{
     }
 }
 AddForm.propTypes = {
-    addBook: PropTypes.func.isRequired
+    addBook: PropTypes.func.isRequired,
+    isbn: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    subject: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

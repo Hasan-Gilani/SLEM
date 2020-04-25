@@ -8,7 +8,7 @@ router.post("/Addbook", (req, res) => {
       if(book){
           return res.status(400).json({ msg: "Book already exists"})
       }else{
-          const newBook = new Book({
+          new Book({
               isbn: req.body.isbn,
               name: req.body.name,
               author: req.body.author,
@@ -19,19 +19,19 @@ router.post("/Addbook", (req, res) => {
               .catch(err => console.log(err));
       }
   })
-}
+    }
 );
 
 router.delete("/delbook/:id", (req, res) => {
-    const delled = req.params.id;
-    Book.deleteOne({isbn: delled})
+    const deleted = req.params.id;
+    Book.deleteOne({isbn: deleted})
         .then(res => console.log("deleted"))
         .catch(err => console.log(err))
 });
 
 router.get("/findbook/:id", (req, res) => {
-   const fbook = req.params.id;
-   Book.find( {isbn: fbook} )
+   const book_id = req.params.id;
+   Book.find( {isbn: book_id} )
        .then( data => {res.send(data)})
        .catch(err => console.log(err))
 });
