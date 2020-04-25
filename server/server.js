@@ -7,7 +7,7 @@ const users = require("./routes/api/users");
 const books = require("./routes/api/books");
 const app = express();
 
-// Bodyparser middleware
+// Body parser middleware
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -20,12 +20,9 @@ const db = require("./config/keys").mongoURI;
 
 // Connect to MongoDB
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("MongoDB successfully connected"))
-  .catch(err => console.log(err));
+    .connect(db, { useNewUrlParser: true })
+    .then(() => console.log("MongoDB successfully connected"))
+    .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
