@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
   render() {
     return (
+      <div className="container-fluid">
+        {/* <img src="assets/images/backgroundimage.png"></img> */}
         <div className="row">
           <div className="col s12 center-align">
             <br />
@@ -27,6 +29,7 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }
