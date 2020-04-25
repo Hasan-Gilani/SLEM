@@ -1,0 +1,28 @@
+NavbarBrand{
+    display: flex;
+    align-items: center;
+  }
+
+.nav-logo {
+    float: left !important;
+    margin-top: -15px !important;
+  }
+
+.breadcrumb {
+    margin-top: -15px !important;
+    margin-bottom: -20px !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.breadcrumb-item{
+  font-size: 15px;
+}
+ListGroup{
+  display: inline-block;
+}
+ListGroup.Item{
+  margin-bottom: 0;
+	margin-left:-4px;
+	margin-right: 0;
+ 	border-right-width: 0;
+}

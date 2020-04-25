@@ -12,10 +12,13 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
-import AddForm from "./components/crudForms/AddForm"
-import DelForm from "./components/crudForms/DelForm";
+// import AddForm from "./components/crudForms/AddForm";
+// import DelForm from "./components/crudForms/DelForm";
 import "./App.css";
-import FindForm from "./components/crudForms/FindForm";
+// import FindForm from "./components/crudForms/FindForm";
+import Bookdata from "./components/crudForms/Bookdata";
+import ManageSports from "./components/dashboard/ManageSports";
+import ManageLibrary from "./components/dashboard/ManageLibrary";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -47,9 +50,13 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/Addform" component={AddForm} />
-              <PrivateRoute exact path="/Delform" component={DelForm} />
-              <PrivateRoute exact path="/Findform" component={FindForm}/>
+              {/* <PrivateRoute exact path="/Addform" component={AddForm} /> */}
+              {/* <PrivateRoute exact path="/Delform" component={DelForm} /> */}
+              {/* <PrivateRoute exact path="/Findform" component={FindForm}/> */}
+              <PrivateRoute exact path="/Bookdata" component={Bookdata}/>
+              <PrivateRoute exact path="/ManageSports" component={ManageSports} />
+              <PrivateRoute exact path="/ManageLibrary" component={ManageLibrary} />
+              
             </Switch>
           </div>
         </Router>
