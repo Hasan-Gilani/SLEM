@@ -19,7 +19,16 @@ class Book extends Component {
             subject: this.props.subject
         })
     }
-
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.isbn !== prevState.isbn){
+            this.setState({
+                isbn: this.props.isbn,
+                author: this.props.author,
+                name: this.props.name,
+                subject: this.props.subject
+            })
+        }
+    }
 
     render() {
         return (
