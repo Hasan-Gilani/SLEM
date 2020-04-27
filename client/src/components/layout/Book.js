@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Table from 'react-bootstrap/Table';
 
 class Book extends Component {
     constructor(props) {
@@ -32,11 +32,27 @@ class Book extends Component {
 
     render() {
         return (
-            <div>
-                <h1>ISBN: {this.state.isbn}</h1>
-                <h1>Name: {this.state.name}</h1>
-                <h1>Author: {this.state.author}</h1>
-                <h1>Subject: {this.state.subject}</h1>
+            <div className="container p-5 rounded mb-0 block-example border border-light">
+                <Table responsive>
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>ISBN</th>
+                        <th>Name</th>
+                        <th>Author</th>
+                        <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>1</td>
+                        <td>{this.state.isbn}</td>
+                        <td>{this.state.name}</td>
+                        <td>{this.state.author}</td>
+                        <td>{this.state.subject}</td>
+                        </tr>
+                    </tbody>
+                </Table>
             </div>
         );
     }

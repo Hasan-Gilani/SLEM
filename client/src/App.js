@@ -15,7 +15,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 // import AddForm from "./components/crudForms/AddForm";
 // import DelForm from "./components/crudForms/DelForm";
 import "./App.css";
-import FindForm from "./components/crudForms/FindForm";
+// import FindForm from "./components/crudForms/FindForm";
 // import Bookdata from "./components/crudForms/Bookdata";
 import ManageSports from "./components/dashboard/ManageSports";
 import ManageLibrary from "./components/dashboard/ManageLibrary";
@@ -52,7 +52,7 @@ class App extends Component {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               {/* <PrivateRoute exact path="/Addform" component={AddForm} /> */}
               {/* <PrivateRoute exact path="/Delform" component={DelForm} /> */}
-               <PrivateRoute exact path="/Findform" component={FindForm}/>
+               {/* <PrivateRoute exact path="/Findform" component={FindForm}/> */}
               {/*<PrivateRoute exact path="/Bookdata" component={Bookdata}/>*/}
               <PrivateRoute exact path="/ManageSports" component={ManageSports} />
               <PrivateRoute exact path="/ManageLibrary" component={ManageLibrary} />

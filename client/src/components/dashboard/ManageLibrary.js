@@ -11,6 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
 import 'react-bootstrap';
 import NewUser from "./NewUser";
+import Findform from "./FindForm";
 
 class ManageLibrary extends Component {
   onLogoutClick = e => {
@@ -198,6 +199,9 @@ class ManageLibrary extends Component {
                             </div>
                             <div className="row">
                               <Tab.Content>
+                                  <div>
+                                    <NewUser />
+                                  </div>
                                 <Tab.Pane eventKey="#link31">
                                   <div>
                                     <NewUser />
@@ -298,10 +302,11 @@ class ManageLibrary extends Component {
 
                     <Tab.Pane eventKey="#link5">
                       <div>
-                        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link51">
+                        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link50">
                           <div className="container">
                             <div className="row">
                               <ListGroup horizontal>
+                                <ListGroup.Item action href="#link50" className="p-4 d-flex justify-content-around"><i className="fa fa-search">Search</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link51" className="p-4 d-flex justify-content-around"><i className="fa fa-plus">New</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link52" className="p-4 d-flex justify-content-around"><i className="fa fa-upload">Import</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link53" className="p-4 d-flex justify-content-around"><i className="fa fa-trash-o">Delete</i></ListGroup.Item>
@@ -311,6 +316,12 @@ class ManageLibrary extends Component {
                             </div>
                             <div className="row">
                               <Tab.Content>
+                              <Tab.Pane eventKey="#link50">
+                                  <div>
+                                  <Findform />
+
+                                  </div>
+                                </Tab.Pane>
                                 <Tab.Pane eventKey="#link51">
                                   <div>
                                     <NewUser />
