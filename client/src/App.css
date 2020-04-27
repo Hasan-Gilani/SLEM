@@ -1,0 +1,52 @@
+NavbarBrand{
+    display: flex;
+    align-items: center;
+  }
+
+.nav-logo {
+    float: left !important;
+    margin-top: -15px !important;
+  }
+
+.breadcrumb {
+    margin-top: -15px !important;
+    margin-bottom: -20px !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.breadcrumb-item{
+  font-size: 15px;
+}
+ListGroup{
+  display: inline-block;
+}
+ListGroup.Item{
+  margin-bottom: 0;
+	margin-left:-4px;
+	margin-right: 0;
+ 	border-right-width: 0;
+}
+.bg-img{
+    background-image: url("backgroundimage.png");
+    position: fixed;
+    min-width: 100%;
+    min-height: 100% ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#maincontainer{
+    position: absolute;
+    padding: 50px;
+    display: flex;
+    background-color: rgb(253, 253, 253);
+    height: 100%;
+    text-align: center;
+    width: 45%;
+}
+.row-content {
+    margin:0px auto;
+    padding: 25% 0% 50% 0%;
+    min-height:100px;
+}

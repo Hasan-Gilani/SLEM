@@ -4,16 +4,15 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
   render() {
     return (
-      <div className="container-fluid">
-        {/* <img src="assets/images/backgroundimage.png"></img> */}
-        <div className="row">
-          <div className="col s12 center-align">
-            <br />
-              <div className="row justify-content-center">
-                  <img src={require("./Logo.png")}/>
-              </div>
-            <div className="row">
-            <div className="col s12">
+      <div className="bg-img">
+        <div className="d-flex flex-column align-items-center" id="maincontainer">
+          <div className="row row-content align-items-center" >
+            
+            <div className="col-12">
+              <img src={require("./Logo.png")}/>
+            </div>
+
+            <div className="col-12 ">
               <Link
                 to="/login"
                 style={{
@@ -21,12 +20,12 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn mb-2 waves-effect waves-light hoverable blue accent-3"
+                className="btn mb-2 waves-effect waves-light hoverable blue accent-3 "
               >
                 Log In
               </Link>
             </div>
-            </div>
+
           </div>
         </div>
       </div>
