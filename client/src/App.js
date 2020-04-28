@@ -12,7 +12,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
-// import AddForm from "./components/crudForms/AddForm";
+import AddForm from "./components/crudForms/AddForm";
 // import DelForm from "./components/crudForms/DelForm";
 import "./App.css";
 // import FindForm from "./components/crudForms/FindForm";
@@ -50,7 +50,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              {/* <PrivateRoute exact path="/Addform" component={AddForm} /> */}
+              <PrivateRoute exact path="/Addform" component={AddForm} />
               {/* <PrivateRoute exact path="/Delform" component={DelForm} /> */}
                {/* <PrivateRoute exact path="/Findform" component={FindForm}/> */}
               {/*<PrivateRoute exact path="/Bookdata" component={Bookdata}/>*/}

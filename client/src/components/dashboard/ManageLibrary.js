@@ -12,7 +12,7 @@ import Tab from 'react-bootstrap/Tab';
 import 'react-bootstrap';
 import NewUser from "./NewUser";
 import Findform from "./FindForm";
-
+import AddForm from "./AddForm";
 class ManageLibrary extends Component {
   onLogoutClick = e => {
     e.preventDefault();
@@ -60,7 +60,7 @@ class ManageLibrary extends Component {
                     <ListGroup.Item action href="#link5" className="p-4 d-flex justify-content-around"><i className="fa fa-book">Books</i></ListGroup.Item>
                   </ListGroup>
                 </div>
-                <div className="col col-sm-9">
+                <div className="col col-sm-9" >
                   <Tab.Content>
                   
                     <Tab.Pane eventKey="#link1">
@@ -324,7 +324,7 @@ class ManageLibrary extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link51">
                                   <div>
-                                    <NewUser />
+                                    <AddForm />
 
                                   </div>
                                 </Tab.Pane>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Table from 'react-bootstrap/Table';
+import 'font-awesome/css/font-awesome.min.css';
+
 
 class Book extends Component {
     constructor(props) {
@@ -32,30 +33,77 @@ class Book extends Component {
 
     render() {
         return (
-            <div className="container p-5 rounded mb-0 block-example border border-light">
-                <Table responsive>
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>ISBN</th>
-                        <th>Name</th>
-                        <th>Author</th>
-                        <th>Subject</th>
-                        </tr>
-                    </thead>
+                <div class="px-4">
+                    <div class="table-wrapper table-responsive table-bordered ">
+                        <table class="table table-hover mb-0" variant='dark' cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                <th>
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheckall"></input>
+                                        <label class="custom-control-label" for="customCheckall">Select all</label>
+                                    </div>
+                                </th>
+                                <th class="th-lg">
+                                <a href="">ISBN
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Name
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Author
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Subject
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Status
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                <a href="">Actions
+                                </a>
+                                </th>
+                                </tr>
+                            </thead>
+                    
                     <tbody>
                         <tr>
-                        <td>1</td>
+                        <th scope="row">
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1"></input>
+                                <label class="custom-control-label" for="customCheck1"></label>
+                            </div>
+                        </th>
                         <td>{this.state.isbn}</td>
                         <td>{this.state.name}</td>
                         <td>{this.state.author}</td>
                         <td>{this.state.subject}</td>
+                        <td>Status</td>
+                        <td>
+                            <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                        </td>
                         </tr>
                     </tbody>
-                </Table>
-            </div>
+                    
+                    </table>
+                
+                </div>
+
+                </div>
+
         );
     }
 }
-
 export default Book;
