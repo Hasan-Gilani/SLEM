@@ -13,6 +13,8 @@ import 'react-bootstrap';
 import NewUser from "./NewUser";
 import Findform from "./FindForm";
 import AddForm from "./AddForm";
+import ImportBook from './ImportBook';
+
 class ManageLibrary extends Component {
   onLogoutClick = e => {
     e.preventDefault();
@@ -330,7 +332,7 @@ class ManageLibrary extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link52">
                                   <div>
-
+                                    <ImportBook />
                                   </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link53">
