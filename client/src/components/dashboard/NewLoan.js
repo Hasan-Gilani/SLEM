@@ -85,7 +85,8 @@ class NewLoan extends Component{
 const mapStateToProps = state => ({
     isbn: state.isbn,
     studentid: state.studentid,
-    issuedate: state.issuedate
+    issuedate: state.issuedate,
+    duedate: state.duedate
 });
 
 export default connect(
