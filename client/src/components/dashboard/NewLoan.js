@@ -1,35 +1,21 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux"
-import { addBook } from "../../crudActions/addAction";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 
-class AddForm extends Component{
+class NewLoan extends Component{
     constructor(props) {
         super(props);
         this.state = {
             isbn: "",
-            name: "",
-            author: ""
+            studentid: "",
+            issuedate: "",
+            duedate:""
         };
     }
-
-    onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
-    };
-
-    onSubmit = e => {
-        e.preventDefault();
-        const bookData = {
-            isbn: this.state.isbn,
-            name: this.state.name,
-            author: this.state.author
-        };
-        this.props.addBook(bookData)
-    };
 
     render() {
         return(
@@ -47,38 +33,39 @@ class AddForm extends Component{
                         </Form.Row>
                     </Form.Group>
                     
-                    <Form.Group as={Col} controlId="name">
+                    <Form.Group as={Col} controlId="studentid">
                         <Form.Row>
                             <Form.Label column lg={2}>
-                                Title
+                                Student ID
                             </Form.Label>
                             <Col>
-                                <Form.Control type="text"  id="name" placeholder="Enter Title" onChange={this.onChange} value={this.state.name} />
+                                <Form.Control type="text"  id="studentid" placeholder="Enter Student ID" onChange={this.onChange} value={this.state.studentid} />
                             </Col>
                         </Form.Row>
                     </Form.Group>
                         
-                    <Form.Group as={Col} controlId="author">
+                    <Form.Group as={Col} controlId="issuedate">
                         <Form.Row>
                             <Form.Label column lg={2}>
-                                Author
+                                Issue Date
                             </Form.Label>
                             <Col>
-                                <Form.Control id="author" type="text" placeholder="Enter Author"  onChange={this.onChange}  value={this.state.author}/>
+                                <Form.Control id="issuedate" type="date" placeholder="Enter Issue Date"  onChange={this.onChange}  value={this.state.issuedate}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="noofcopies">    
+                    <Form.Group as={Col} controlId="duedate">
                         <Form.Row>
                             <Form.Label column lg={2}>
-                                No. of Copies
+                                Due Date
                             </Form.Label>
                             <Col>
-                                <Form.Control id="noofcopies" type="integer" placeholder="No. of Copies"/>
+                                <Form.Control id="duedate" type="date" placeholder="Enter Due Date"  onChange={this.onChange}  value={this.state.duedate}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>
+
 
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
@@ -94,16 +81,13 @@ class AddForm extends Component{
         );
     }
 }
-AddForm.propTypes = {
-    addBook: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
     isbn: state.isbn,
-    name: state.name,
-    author: state.author
+    studentid: state.studentid,
+    issuedate: state.issuedate
 });
 
 export default connect(
-    mapStateToProps, { addBook }
-) (AddForm);
+    mapStateToProps, { NewLoan }
+) (NewLoan);

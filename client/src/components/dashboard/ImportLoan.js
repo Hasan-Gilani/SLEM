@@ -7,19 +7,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 
-class ImportBook extends Component{
+class ImportLoan extends Component{
     render() {
         return (
             <div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form>
-                    <Form.Group as={Col} controlId="isbn">
+                    <Form.Group as={Col} controlId="loan">
                         <Form.Row>
                             <Form.Label column lg={2}>
-                                Import Books
+                                Import Loans
                             </Form.Label>
                             <Col>
-                                <Form.Control id="isbn" type="file" />
+                                <Form.Control id="loan" type="file" />
                             </Col>
                         </Form.Row>
                     </Form.Group>
@@ -38,4 +38,4 @@ class ImportBook extends Component{
         );
     }
 }
-export default ImportBook;
+export default ImportLoan;
