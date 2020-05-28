@@ -9,7 +9,7 @@ class NewUser extends Component{
         super(props);
         // this.state = {
         //     isbn: "",
-        //     name: "",
+        //     title: "",
         //     author: "",
         //     subject: ""
         // };
@@ -23,7 +23,7 @@ class NewUser extends Component{
     //     e.preventDefault();
     //     const bookData = {
     //         isbn: this.state.isbn,
-    //         name: this.state.name,
+    //         title: this.state.title,
     //         author: this.state.author,
     //         subject: this.state.subject
     //     };
@@ -51,8 +51,8 @@ class NewUser extends Component{
                         <h6>First Name</h6>
                         <input
                             onChange={this.onChange}
-                            // value={this.state.name}
-                            // id='name'
+                            // value={this.state.title}
+                            // id='title'
                             // type='text'
 
                         />
@@ -107,14 +107,14 @@ class NewUser extends Component{
 // NewUser.propTypes = {
 //     addBook: PropTypes.func.isRequired,
 //     isbn: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
+//     title: PropTypes.string.isRequired,
 //     author: PropTypes.string.isRequired,
 //     subject: PropTypes.string.isRequired
 // };
 
 // const mapStateToProps = state => ({
 //     isbn: state.isbn,
-//     name: state.name,
+//     title: state.title,
 //     author: state.author,
 //     subject: state.subject
 // });

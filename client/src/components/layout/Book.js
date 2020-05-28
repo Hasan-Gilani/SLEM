@@ -6,7 +6,7 @@ class Book extends Component {
         super(props);
         this.state = {
             isbn: props.isbn,
-            name: props.name,
+            title: props.title,
             author: props.author,
             subject: props.author
         }
@@ -14,7 +14,7 @@ class Book extends Component {
     componentDidMount() {
         this.setState({
             author: this.props.author,
-            name: this.props.name,
+            title: this.props.title,
             isbn: this.props.isbn,
             subject: this.props.subject
         })
@@ -24,7 +24,7 @@ class Book extends Component {
             this.setState({
                 isbn: this.props.isbn,
                 author: this.props.author,
-                name: this.props.name,
+                title: this.props.title,
                 subject: this.props.subject
             })
         }
@@ -34,7 +34,7 @@ class Book extends Component {
         return (
             <div>
                 <h1>ISBN: {this.state.isbn}</h1>
-                <h1>Name: {this.state.name}</h1>
+                <h1>Name: {this.state.title}</h1>
                 <h1>Author: {this.state.author}</h1>
                 <h1>Subject: {this.state.subject}</h1>
             </div>

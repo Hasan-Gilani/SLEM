@@ -8,9 +8,8 @@ class AddForm extends Component{
         super(props);
         this.state = {
             isbn: "",
-            name: "",
+            title: "",
             author: "",
-            subject: ""
         };
     }
 
@@ -22,9 +21,8 @@ class AddForm extends Component{
         e.preventDefault();
         const bookData = {
             isbn: this.state.isbn,
-            name: this.state.name,
-            author: this.state.author,
-            subject: this.state.subject
+            title: this.state.title,
+            author: this.state.author
         };
         this.props.addBook(bookData)
     };
@@ -49,10 +47,10 @@ class AddForm extends Component{
                             id="isbn"
                             type='text'
                         />
-                        <h6>Enter name</h6>
+                        <h6>Enter title</h6>
                         <input
                             onChange={this.onChange}
-                            value={this.state.name}
+                            value={this.state.title}
                             id='name'
                             type='text'
 
@@ -62,13 +60,6 @@ class AddForm extends Component{
                             onChange={this.onChange}
                             value={this.state.author}
                             id="author"
-                            type="text"
-                        />
-                        <h6>Enter subject</h6>
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.subject}
-                            id="subject"
                             type="text"
                         />
                         <button
@@ -96,9 +87,8 @@ AddForm.propTypes = {
 
 const mapStateToProps = state => ({
     isbn: state.isbn,
-    name: state.name,
+    title: state.title,
     author: state.author,
-    subject: state.subject
 });
 
 export default connect(

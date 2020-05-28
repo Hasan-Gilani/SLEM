@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Book = require("../../models/Books");
-
+const User = require("../../models/User")
 router.post("/Addbook", (req, res) => {
   Book.findOne({isbn: req.body.isbn}).then(book => {
       if(book){
@@ -10,9 +10,8 @@ router.post("/Addbook", (req, res) => {
       }else{
           new Book({
               isbn: req.body.isbn,
-              name: req.body.name,
-              author: req.body.author,
-              subject: req.body.subject
+              title: req.body.title,
+              author: req.body.author
           })
               .save()
               .then(res => console.log(``))

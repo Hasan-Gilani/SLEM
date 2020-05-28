@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 // Create Schema
+
 const BookSchema = new Schema({
     isbn: {
         type: String,
         required: true
     },
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -15,9 +15,15 @@ const BookSchema = new Schema({
         type: String,
         required: true
     },
-    subject: {
+    quantity: {
         type: String,
-        default: Date.now
+        required: true
+    },
+    added_by: {
+      type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        date_added: Date.now(),
+        required: true
     }
 });
 

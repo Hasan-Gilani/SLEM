@@ -25,12 +25,14 @@ class FindForm extends Component{
                 return response.data
             }).catch(err => console.log(err))
     }
-    onFindPress = () => {
+    onFindPress = (e) => {
+        e.preventDefault()
+
         this.make_call().then(data => {
             if(data[0]){
                 this.setState({
                     book_view: true,
-                    book_form: <Book isbn={data[0].isbn} name={data[0].name}
+                    book_form: <Book isbn={data[0].isbn} title={data[0].name}
                                      author={data[0].author} subject={data[0].subject}/>
                 });
             }
@@ -47,7 +49,7 @@ class FindForm extends Component{
                     <h4> <b>Find Book</b> </h4>
                     </div>
                     <div className="col s12" style={{paddingLeft: "50px"}}>
-                        <form style={{}} >
+                        <form style={{}} onSubmit={ this.onFindPress}>
                             <ul>
                                 <h5><li> By Isbn </li></h5>
                                     <input style={{marginTop:"15px", width: "50%"}}
@@ -63,9 +65,9 @@ class FindForm extends Component{
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem"
                             }}
-                                    type = "button"
+                                    type = "submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                    onClick={this.onFindPress}
+
                             >
                                 Find
                             </button>

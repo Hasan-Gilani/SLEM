@@ -21,6 +21,10 @@ module.exports = function validateRegisterInput(data) {
   } else if (!Validator.isEmail(data.email)) {
     errors.email = "Email is invalid";
   }
+  else if (!Validator.matches(data.email, "[\\w]+\\@(nu.edu.pk)$")){
+    errors.email =  "invalid domain title"
+  }
+
 
   // Password checks
   if (Validator.isEmpty(data.password)) {
