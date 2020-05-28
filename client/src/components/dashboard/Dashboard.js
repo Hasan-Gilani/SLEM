@@ -7,6 +7,7 @@ import Link from "react-router-dom/es/Link";
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.min.js';
+import 'jquery';
 
 class Dashboard extends Component {
   onLogoutClick = e => {

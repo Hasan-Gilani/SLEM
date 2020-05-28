@@ -29,6 +29,7 @@ class AddForm extends Component{
 
     render() {
         return(
+            
             <div className="container">
                 <div style={{marginTop: "4rem"}} className="row">
                     <div className="col s12" style={{ paddingLeft: "11.250px" }}>
@@ -82,7 +83,11 @@ class AddForm extends Component{
     }
 }
 AddForm.propTypes = {
-    addBook: PropTypes.func.isRequired
+    addBook: PropTypes.func.isRequired,
+    isbn: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    subject: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
