@@ -6,24 +6,33 @@ class StudentRecord extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isbn: props.isbn,
-            name: props.name,
-            author: props.author
+            book: props.book,
+            studentid: props.studentid,
+            Sname: props.Sname,
+            issuedate: props.issuedate,
+            duedate: props.duedate,
+            status: props.satus
         }
     }
     componentDidMount() {
         this.setState({
-            author: this.props.author,
-            name: this.props.name,
-            isbn: this.props.isbn
+            book: this.props.book,
+            studentid: this.props.studentid,
+            Sname: this.props.Sname,
+            issuedate: this.props.issuedate,
+            duedate: this.props.duedate,
+            status: this.props.satus
         })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.isbn !== prevState.isbn){
+        if(this.props.studentid !== prevState.studentid){
             this.setState({
-                isbn: this.props.isbn,
-                author: this.props.author,
-                name: this.props.name
+                book: this.props.book,
+                studentid: this.props.studentid,
+                Sname: this.props.Sname,
+                issuedate: this.props.issuedate,
+                duedate: this.props.duedate,
+                status: this.props.satus
             })
         }
     }
@@ -42,7 +51,12 @@ class StudentRecord extends Component {
                                     </div>
                                 </th>
                                 <th class="th-lg">
-                                <a href="">ISBN
+                                <a href="">Book
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Student ID
                                     <i class="fa fa-sort ml-1"></i>
                                     </a>
                                 </th>
@@ -52,7 +66,12 @@ class StudentRecord extends Component {
                                     </a>
                                 </th>
                                 <th class="th-lg">
-                                    <a href="">Author
+                                    <a href="">Issue Date
+                                    <i class="fa fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th class="th-lg">
+                                    <a href="">Due Date
                                     <i class="fa fa-sort ml-1"></i>
                                     </a>
                                 </th>
@@ -76,9 +95,11 @@ class StudentRecord extends Component {
                                 <label class="custom-control-label" for="customCheck1"></label>
                             </div>
                         </th>
-                        <td>{this.state.isbn}</td>
-                        <td>{this.state.name}</td>
-                        <td>{this.state.author}</td>
+                        <td>{this.state.book}</td>
+                        <td>{this.state.studentid}</td>
+                        <td>{this.state.Sname}</td>
+                        <td>{this.state.issuedate}</td>
+                        <td>{this.state.duedate}</td>
                         <td>Status</td>
                         <td>
                             <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
