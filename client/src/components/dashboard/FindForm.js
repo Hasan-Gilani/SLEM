@@ -36,7 +36,7 @@ class Findform extends Component{
                 this.setState({
                     book_view: true,
                     book_form: <Book isbn={data[0].isbn} name={data[0].name}
-                                     author={data[0].author} subject={data[0].subject}/>
+                                     author={data[0].author}/>
                 });
             }
             else{

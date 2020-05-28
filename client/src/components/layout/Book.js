@@ -8,16 +8,14 @@ class Book extends Component {
         this.state = {
             isbn: props.isbn,
             name: props.name,
-            author: props.author,
-            subject: props.author
+            author: props.author
         }
     }
     componentDidMount() {
         this.setState({
             author: this.props.author,
             name: this.props.name,
-            isbn: this.props.isbn,
-            subject: this.props.subject
+            isbn: this.props.isbn
         })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -25,8 +23,7 @@ class Book extends Component {
             this.setState({
                 isbn: this.props.isbn,
                 author: this.props.author,
-                name: this.props.name,
-                subject: this.props.subject
+                name: this.props.name
             })
         }
     }
@@ -60,11 +57,6 @@ class Book extends Component {
                                     </a>
                                 </th>
                                 <th class="th-lg">
-                                    <a href="">Subject
-                                    <i class="fa fa-sort ml-1"></i>
-                                    </a>
-                                </th>
-                                <th class="th-lg">
                                     <a href="">Status
                                     <i class="fa fa-sort ml-1"></i>
                                     </a>
@@ -87,7 +79,6 @@ class Book extends Component {
                         <td>{this.state.isbn}</td>
                         <td>{this.state.name}</td>
                         <td>{this.state.author}</td>
-                        <td>{this.state.subject}</td>
                         <td>Status</td>
                         <td>
                             <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
