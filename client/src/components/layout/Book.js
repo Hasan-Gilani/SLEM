@@ -7,8 +7,8 @@ class Book extends Component {
         super(props);
         this.state = {
             title: props.title,
-            author: props.author,
-            subject: props.author
+            isbn: props.isbn,
+            subject: props.subject
 
         }
     }
@@ -48,12 +48,12 @@ class Book extends Component {
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Name
+                                <a href="">Title
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Author
+                                <a href="">Subject
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
@@ -78,8 +78,8 @@ class Book extends Component {
                                 </div>
                             </th>
                             <td>{this.state.isbn}</td>
-                            <td>{this.state.name}</td>
-                            <td>{this.state.author}</td>
+                            <td>{this.state.title}</td>
+                            <td>{this.state.subject}</td>
                             <td>Status</td>
                             <td>
                                 <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
