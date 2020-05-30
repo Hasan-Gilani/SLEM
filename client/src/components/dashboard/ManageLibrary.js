@@ -33,11 +33,10 @@ class ManageLibrary extends Component {
           <Navbar dark color="primary" >
             <div className="container-fluid">
               <div className="col-xs-6">
-                <Link to="/dashboard">
-                  <NavbarBrand><img src="assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
-                  <h1 height="65" width="55"><strong>LEM</strong></h1></NavbarBrand>
-
-                </Link>
+              <NavbarBrand>
+                <img src="assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
+                <h1 height="65" width="55"><strong>LEM</strong></h1>
+              </NavbarBrand>
               </div>
               <div className="col-xs-6 d-flex justify-content-end">
                 <Button color="primary" className="fa fa-sign-out" onClick={this.onLogoutClick}>logout</Button>
@@ -46,10 +45,10 @@ class ManageLibrary extends Component {
           </Navbar>
           <div >
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-dark ">
-                  <li class="breadcrumb-item" ><a href="/dashboard" class="text-light">Home</a></li>
-                  <li class="breadcrumb-item "><a href="#" class="text-light" active>Manage Library</a></li> 
-                </ol>      
+                <ol className="breadcrumb bg-dark ">
+                  <li className="breadcrumb-item" ><a href="/dashboard" className="text-light">Home</a></li>
+                  <li className="breadcrumb-item "><a href="#" className="text-light" active="true" >Manage Library</a></li>
+                </ol>
             </nav>
           </div>
           <hr />
@@ -68,7 +67,7 @@ class ManageLibrary extends Component {
                 </div>
                 <div className="col col-sm-9" >
                   <Tab.Content>
-                  
+
                     <Tab.Pane eventKey="#link1">
                       <div>
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link11">
@@ -306,7 +305,7 @@ class ManageLibrary extends Component {
 
                                   </div>
                                 </Tab.Pane>
-            
+
                               </Tab.Content>
                             </div>
                           </div>
@@ -362,7 +361,7 @@ class ManageLibrary extends Component {
 
                                   </div>
                                 </Tab.Pane>
-                                
+
                               </Tab.Content>
                             </div>
                           </div>
@@ -374,7 +373,7 @@ class ManageLibrary extends Component {
               </div>
             </Tab.Container>
               {/* <div className="col-xs-3">
-              
+
 
               </div>
               <div className="col-xs-9">

@@ -2,28 +2,24 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 
-const BookSchema = new Schema({
-    isbn: {
+const StudentSchema = new Schema({
+    id: {
         type: String,
         required: true
     },
-    title: {
+    fname: {
         type: String,
         required: true
     },
-    subject: {
+    lname: {
         type: String,
         required: true
     },
-    copies: {
-        type: String,
-        required: true
-    },
-    available: {
-        type: Boolean,
+    surcharge: {
+        type: Number,
         required: false,
-        default: true
+        default: 0
     }
 });
 
-module.exports = Books = mongoose.model("books", BookSchema);
+module.exports = Students = mongoose.model("students", StudentSchema);

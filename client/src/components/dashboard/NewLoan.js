@@ -16,13 +16,15 @@ class NewLoan extends Component{
             duedate:""
         };
     }
-
+    onChange = e => {
+        console.log("Za Warudo")
+    }
     render() {
         return(
             <div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form noValidate onSubmit={this.onSubmit}>
-                    <Form.Group as={Col} controlId="isbn">
+                    <Form.Group as={Col} >
                         <Form.Row>
                             <Form.Label column lg={2}>
                                 ISBN
@@ -32,19 +34,19 @@ class NewLoan extends Component{
                             </Col>
                         </Form.Row>
                     </Form.Group>
-                    
-                    <Form.Group as={Col} controlId="studentid">
+
+                    <Form.Group as={Col} >
                         <Form.Row>
                             <Form.Label column lg={2}>
-                                Student ID
+                                Students ID
                             </Form.Label>
                             <Col>
-                                <Form.Control type="text"  id="studentid" placeholder="Enter Student ID" onChange={this.onChange} value={this.state.studentid} />
+                                <Form.Control type="text"  id="studentid" placeholder="Enter Students ID" onChange={this.onChange} value={this.state.studentid} />
                             </Col>
                         </Form.Row>
                     </Form.Group>
-                        
-                    <Form.Group as={Col} controlId="issuedate">
+
+                    <Form.Group as={Col}>
                         <Form.Row>
                             <Form.Label column lg={2}>
                                 Issue Date
@@ -55,7 +57,7 @@ class NewLoan extends Component{
                         </Form.Row>
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="duedate">
+                    <Form.Group as={Col} >
                         <Form.Row>
                             <Form.Label column lg={2}>
                                 Due Date

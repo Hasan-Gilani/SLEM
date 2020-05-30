@@ -13,7 +13,7 @@ class ImportLoan extends Component{
             <div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form>
-                    <Form.Group as={Col} controlId="loan">
+                    <Form.Group as={Col}>
                         <Form.Row>
                             <Form.Label column lg={2}>
                                 Import Loans
@@ -23,7 +23,7 @@ class ImportLoan extends Component{
                             </Col>
                         </Form.Row>
                     </Form.Group>
-                   
+
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
                             <Button variant="primary" type = "button" className="fa fa-upload" onClick={this.onFindPress}>import</Button>

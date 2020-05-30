@@ -23,11 +23,9 @@ class Dashboard extends Component {
             <Navbar dark color="primary" >
               <div className="container-fluid">
                   <div className="col-xs-6">
-                    <Link to="/dashboard">
-                      <NavbarBrand><img src="assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
+                      <NavbarBrand>
+                        <img src="assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
                       <h1 height="65" width="55"><strong>LEM</strong></h1></NavbarBrand>
-
-                    </Link>
                   </div>
                   <div className="col-xs-6 d-flex justify-content-end">
                     <Button color="primary" className="fa fa-sign-out" onClick={this.onLogoutClick}>logout</Button>

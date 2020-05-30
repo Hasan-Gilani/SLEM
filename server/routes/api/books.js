@@ -2,20 +2,29 @@ const express = require("express");
 const router = express.Router();
 
 const Book = require("../../models/Books");
-const User = require("../../models/User")
 router.post("/Addbook", (req, res) => {
   Book.findOne({isbn: req.body.isbn}).then(book => {
       if(book){
-          return res.status(400).json({ msg: "Book already exists"})
+          console.log(book)
+        return res.status(400).json({bookfound : "A book with the given ISBN already exists."});
       }else{
+          console.log(req.body.isbn,
+              req.body.title,
+              req.body.subject,
+              req.body.copies)
           new Book({
               isbn: req.body.isbn,
               title: req.body.title,
-              author: req.body.author
+              subject: req.body.subject,
+              copies: req.body.copies
           })
               .save()
-              .then(res => console.log(``))
-              .catch(err => console.log(err));
+              .then( (dummy) => {
+               return res.status(200).json({added: "Book Added."});
+              })
+              .catch(err => {
+                  console.log(err)
+                  res.status(403).json({error: true, message: "Book was not added"})});
       }
   })
     }

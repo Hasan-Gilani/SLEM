@@ -31,70 +31,71 @@ class Book extends Component {
 
     render() {
         return (
-                <div class="px-4">
-                    <div class="table-wrapper table-responsive table-bordered ">
-                        <table class="table table-hover mb-0" variant='dark' cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                <th>
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheckall"></input>
-                                        <label class="custom-control-label" for="customCheckall">Select all</label>
-                                    </div>
-                                </th>
-                                <th class="th-lg">
+            <div className="px-4">
+                <div className="table-wrapper table-responsive table-bordered ">
+                    <table className="table table-hover mb-0" variant='dark' cellSpacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div className="custom-control custom-checkbox">
+                                    <input type="checkbox" className="custom-control-input" id="customCheckall"/>
+                                    <label className="custom-control-label" htmlFor="customCheckall">Select all</label>
+                                </div>
+                            </th>
+                            <th className="th-lg">
                                 <a href="">ISBN
-                                    <i class="fa fa-sort ml-1"></i>
-                                    </a>
-                                </th>
-                                <th class="th-lg">
-                                    <a href="">Name
-                                    <i class="fa fa-sort ml-1"></i>
-                                    </a>
-                                </th>
-                                <th class="th-lg">
-                                    <a href="">Author
-                                    <i class="fa fa-sort ml-1"></i>
-                                    </a>
-                                </th>
-                                <th class="th-lg">
-                                    <a href="">Status
-                                    <i class="fa fa-sort ml-1"></i>
-                                    </a>
-                                </th>
-                                <th class="th-lg">
+                                    <i className="fa fa-sort ml-1"/>
+                                </a>
+                            </th>
+                            <th className="th-lg">
+                                <a href="">Name
+                                    <i className="fa fa-sort ml-1"/>
+                                </a>
+                            </th>
+                            <th className="th-lg">
+                                <a href="">Author
+                                    <i className="fa fa-sort ml-1"/>
+                                </a>
+                            </th>
+                            <th className="th-lg">
+                                <a href="">Status
+                                    <i className="fa fa-sort ml-1"/>
+                                </a>
+                            </th>
+                            <th className="th-lg">
                                 <a href="">Actions
                                 </a>
-                                </th>
-                                </tr>
-                            </thead>
-
-                    <tbody>
-                        <tr>
-                        <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1"></input>
-                                <label class="custom-control-label" for="customCheck1"></label>
-                            </div>
-                        </th>
-                        <td>{this.state.isbn}</td>
-                        <td>{this.state.name}</td>
-                        <td>{this.state.author}</td>
-                        <td>Status</td>
-                        <td>
-                            <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                        </td>
+                            </th>
                         </tr>
-                    </tbody>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <div className="custom-control custom-checkbox">
+                                    <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                    <label className="custom-control-label" htmlFor="customCheck1"/>
+                                </div>
+                            </th>
+                            <td>{this.state.isbn}</td>
+                            <td>{this.state.name}</td>
+                            <td>{this.state.author}</td>
+                            <td>Status</td>
+                            <td>
+                                <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
+                                <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>
+                                <button type="button" className="btn btn-danger"><i className="fa fa-trash-o"/></button>
+                            </td>
+                        </tr>
+                        </tbody>
 
                     </table>
 
                 </div>
 
-                </div>
+            </div>
         );
+
     }
 }
 export default Book;

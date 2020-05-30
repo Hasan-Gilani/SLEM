@@ -14,22 +14,25 @@ class SearchStudentRecord extends Component{
             studentid: ""
         }
     }
+    onChange = e => {
+        console.log("hello")
+    };
     render() {
         return (
             <div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
-                <Form>
-                    <Form.Group as={Col} controlId="studentid">
+                <Form >
+                    <Form.Group as={Col}>
                         <Form.Row>
                             <Form.Label column lg={2}>
-                            Student ID
+                            Students ID
                             </Form.Label>
                             <Col>
-                                <Form.Control id="studentid" type="text" placeholder="Enter Student Id " onChange={this.onChange} value={this.state.studentid}/>
+                                <Form.Control id="studentid" type="text" placeholder="Enter Students Id " onChange={this.onChange} value={this.state.studentid}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>
-                    
+
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
                             <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>

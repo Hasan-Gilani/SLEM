@@ -4,7 +4,7 @@ import Book from "../layout/Book";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 
 class Findform extends Component{
@@ -49,7 +49,7 @@ class Findform extends Component{
             <div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form>
-                    <Form.Group as={Col} controlId="isbn">
+                    <Form.Group as={Col} >
                         <Form.Row>
                             <Form.Label column lg={2}>
                                 ISBN
@@ -59,41 +59,7 @@ class Findform extends Component{
                             </Col>
                         </Form.Row>
                     </Form.Group>
-                    
-                    <Form.Group as={Col} controlId="title">
-                        <Form.Row>
-                            <Form.Label column lg={2}>
-                                Title
-                            </Form.Label>
-                            <Col>
-                                <Form.Control type="text" placeholder="Enter Title" />
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                        
-                    <Form.Group as={Col} controlId="author">
-                        <Form.Row>
-                            <Form.Label column lg={2}>
-                                Author
-                            </Form.Label>
-                            <Col>
-                                <Form.Control  type="text" placeholder="Enter Author" />
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                   
-                    <Form.Group as={Col} controlId="Status">    
-                        <Form.Row>
-                            <Form.Label column lg={2}>Status</Form.Label>
-                            <Col>
-                                <Form.Control as="select"  custom>
-                                    <option>--</option>
-                                    <option>available</option>
-                                    <option>unavailable</option>
-                                </Form.Control>
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
+
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
                             <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>
