@@ -15,7 +15,7 @@ class SearchStudentRecord extends Component{
         }
     }
     onChange = e => {
-        console.log("hello")
+        this.setState({ [e.target.id]: e.target.value });
     };
     render() {
         return (

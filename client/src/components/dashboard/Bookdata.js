@@ -34,9 +34,9 @@ class Bookdata extends Component{
                             <Media object src={book.image} alt={book.name} />
                         </Media>
                         <Media body  className="ml-5">
-                            <Media heading >Name: {book.name}</Media>
+                            <Media heading >Title: {book.title}</Media>
                             <Media heading >Subject: {book.subject}</Media>
-                            <Media heading >Author: {book.author}</Media>
+                            <Media heading >Copies: {book.copies}</Media>
                             <Media heading >ISBN: {book.isbn}</Media>
                         </Media>
                     </Media>
