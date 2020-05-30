@@ -5,7 +5,7 @@ class Landing extends Component {
   render() {
     return (
       <div className="bg-img">
-        <div className="d-flex flex-column align-items-center" id="maincontainer">
+        <div className="col-12" id="maincontainer">
           <div className="row row-content align-items-center" >
             
             <div className="col-12">
@@ -17,12 +17,12 @@ class Landing extends Component {
                 to="/login"
                 style={{
                   width: "140px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
+                  borderRadius: "6px",
+                  letterSpacing: "2.5px"
                 }}
                 className="btn mb-2 waves-effect waves-light hoverable blue accent-3 "
               >
-                Log In
+                <b>Log In</b>
               </Link>
             </div>
 

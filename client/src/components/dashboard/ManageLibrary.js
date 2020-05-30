@@ -18,6 +18,7 @@ import DelForm from "./DelForm";
 import NewLoan from "./NewLoan";
 import ImportLoan from "./ImportLoan";
 import SearchStudentRecord from "./SearchStudentRecord";
+import SendReminder from "./SendReminder";
 
 class ManageLibrary extends Component {
   onLogoutClick = e => {
@@ -302,6 +303,7 @@ class ManageLibrary extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link46">
                                   <div>
+                                    <SendReminder />
 
                                   </div>
                                 </Tab.Pane>

@@ -39,7 +39,7 @@ ListGroup.Item{
 #maincontainer{
     position: absolute;
     padding: 50px;
-    display: flex;
+    display: block;
     background-color: rgb(253, 253, 253);
     height: 100%;
     text-align: center;
