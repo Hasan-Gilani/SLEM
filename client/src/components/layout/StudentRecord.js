@@ -39,60 +39,60 @@ class StudentRecord extends Component {
 
     render() {
         return (
-                <div class="px-4">
-                    <div class="table-wrapper table-responsive table-bordered ">
-                        <table class="table table-hover mb-0" variant='dark' cellspacing="0" width="100%">
+                <div className="px-4">
+                    <div className="table-wrapper table-responsive table-bordered ">
+                        <table className="table table-hover mb-0" variant='dark' cellSpacing="0" width="100%">
                             <thead>
                                 <tr>
                                 <th>
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheckall"></input>
-                                        <label class="custom-control-label" for="customCheckall">Select all</label>
+                                        <input type="checkbox" className="custom-control-input" id="customCheckall"/>
+                                        <label className="custom-control-label" for="customCheckall">Select all</label>
                                     </div>
                                 </th>
-                                <th class="th-lg">
-                                <a href="">Book
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                <a href="_blank">Book
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                    <a href="">Student ID
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                    <a href="_blank">Student ID
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                    <a href="">Name
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                    <a href="_blank">Name
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                    <a href="">Issue Date
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                    <a href="_blank">Issue Date
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                    <a href="">Due Date
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                    <a href="_blank">Due Date
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                    <a href="">Status
-                                    <i class="fa fa-sort ml-1"></i>
+                                <th className="th-lg">
+                                    <a href="_blank">Status
+                                    <i className="fa fa-sort ml-1"/>
                                     </a>
                                 </th>
-                                <th class="th-lg">
-                                <a href="">Actions
+                                <th className="th-lg">
+                                <a href="_blank">Actions
                                 </a>
                                 </th>
                                 </tr>
                             </thead>
-                    
+
                     <tbody>
                         <tr>
                         <th scope="row">
                             <div className="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1"></input>
-                                <label class="custom-control-label" for="customCheck1"></label>
+                                <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                <label className="custom-control-label" for="customCheck1"/>
                             </div>
                         </th>
                         <td>{this.state.book}</td>
@@ -102,15 +102,15 @@ class StudentRecord extends Component {
                         <td>{this.state.duedate}</td>
                         <td>Status</td>
                         <td>
-                            <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                            <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
+                            <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>
+                            <button type="button" className="btn btn-danger"><i className="fa fa-trash-o"/></button>
                         </td>
                         </tr>
                     </tbody>
-                    
+
                     </table>
-                
+
                 </div>
 
                 </div>

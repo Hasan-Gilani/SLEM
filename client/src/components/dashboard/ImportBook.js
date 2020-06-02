@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Book from "../layout/Book";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
+import { Col} from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 
 class ImportBook extends Component{

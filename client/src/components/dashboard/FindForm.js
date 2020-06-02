@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Book from "../layout/Book";
+import LoanInfo from "./LoanInfo";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
+import FlashMessage from "react-flash-message";
 
-class Findform extends Component{
+class FindForm extends Component{
     constructor(props){
         super(props);
         this.state = {
             isbn: "",
-            book_view: false,
-            book_form: null
+            book_form: null,
+            loanForm: [],
+            error: false,
+            msgSuccess: null,
+            msgFail: null,
         }
     }
 
@@ -23,24 +28,42 @@ class Findform extends Component{
 
         })
     };
-    make_call = () => {
+    makeCall = () => {
         return axios
-            .get(`/api/books/findbook/${this.state.isbn}`)
+            .get(`/api/records/findRecord/${this.state.isbn}`)
             .then( (response) => {
                 return response.data
-            }).catch(err => console.log(err))
+            })
+            .catch(error => {
+                return error.response.data;
+            })
     }
-    onFindPress = () => {
-        this.make_call().then(data => {
-            if(data[0]){
+    onFindPress = (e) => {
+        this.setState({msgFail: null, loanForm: []})
+        e.preventDefault();
+        this.makeCall()
+            .then(data => {
+            if(data.error === true){  //book doesn't exist.
                 this.setState({
-                    book_view: true,
-                    book_form: <Book isbn={data[0].isbn} name={data[0].name}
-                                     author={data[0].author}/>
+                    error: true,
+                    msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
                 });
             }
             else{
-                this.setState({book_view: false})
+                let x = (Object.keys(data)).filter(key => {
+                    return (typeof data[key]) === "object";
+                });
+                let loanArray = []
+                x.forEach(id => {
+                    if(id !== 'bookInfo'){
+                        loanArray.push(<LoanInfo id={id} loanDate={data[id]["Loaning Date"]} returnDate={data[id]["Return Date"]} />)
+                    }
+                });
+                let temp = data['bookInfo'];
+                this.setState({
+                    book_form: <Book isbn={temp.isbn} title={temp.title} subject={temp.subject} copies={temp.copies}/>,
+                    loanForm: loanArray
+                })
             }
         })
     };
@@ -69,15 +92,14 @@ class Findform extends Component{
                         </div>
                     </div>
                 </Form>
-            </div>
-
-            <div className="container p-5 rounded mb-0 block-example border border-light">
                 <div className="detail_form">
-                    {(this.state.book_view) ? this.state.book_form : ''}
+                    {(this.state.error) ? this.state.msgFail : this.state.book_form}
+                    {(this.state.loanForm.length > 0) ? this.state.loanForm: ""}
                 </div>
             </div>
+
             </div>
         );
     }
 }
-export default Findform;
+export default FindForm;

@@ -8,7 +8,7 @@ const users = require("./routes/api/users");
 const books = require("./routes/api/books");
 const students = require("./routes/api/students")
 const records = require("./routes/api/records")
-const mailer = require("./routes/api/mailer");
+const mailer = require("./routes/api/mailer").borrow;
 
 const app = express();
 
@@ -30,7 +30,7 @@ mongoose
     .catch(err => console.log(err));
 
 // Passport middleware
-app.use(passport.initialize());
+app.use(passport.initialize());;
 
 // Passport config
 require("./config/passport")(passport);
@@ -41,6 +41,7 @@ app.use("/api/books", books);
 app.use("/api/students", students);
 app.use("/api/records", records);
 app.use("/api"/mailer, mailer);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));

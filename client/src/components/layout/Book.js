@@ -8,15 +8,16 @@ class Book extends Component {
         this.state = {
             title: props.title,
             isbn: props.isbn,
-            subject: props.subject
-
+            subject: props.subject,
+            copies: props.copies
         }
     }
     componentDidMount() {
         this.setState({
             title: this.props.title,
             isbn: this.props.isbn,
-            subject: this.props.subject
+            subject: this.props.subject,
+            copies: this.props.copies
         })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -24,7 +25,8 @@ class Book extends Component {
             this.setState({
                 isbn: this.props.isbn,
                 title: this.props.title,
-                subject: this.props.subject
+                subject: this.props.subject,
+                copies: this.props.copies
             })
         }
     }
@@ -36,34 +38,28 @@ class Book extends Component {
                     <table className="table table-hover mb-0" variant='dark' cellSpacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="customCheckall"/>
-                                    <label className="custom-control-label" htmlFor="customCheckall">Select all</label>
-                                </div>
-                            </th>
                             <th className="th-lg">
-                                <a href="">ISBN
+                                <a href="_blank">ISBN
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Title
+                                <a href="_blank">Title
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Subject
+                                <a href="_blank">Subject
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Status
+                                <a href="_blank">Status
                                     <i className="fa fa-sort ml-1"/>
                                 </a>
                             </th>
                             <th className="th-lg">
-                                <a href="">Actions
+                                <a href="_blank">Actions
                                 </a>
                             </th>
                         </tr>
@@ -71,16 +67,10 @@ class Book extends Component {
 
                         <tbody>
                         <tr>
-                            <th scope="row">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                                    <label className="custom-control-label" htmlFor="customCheck1"/>
-                                </div>
-                            </th>
                             <td>{this.state.isbn}</td>
                             <td>{this.state.title}</td>
                             <td>{this.state.subject}</td>
-                            <td>Status</td>
+                            <td>{(this.state.copies > 0) ? 'Available' : "All copied Loaned"}</td>
                             <td>
                                 <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
                                 <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>

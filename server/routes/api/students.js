@@ -3,9 +3,11 @@ const router = express.Router();
 
 const Students = require("../../models/Students");
 
-router.get("/find", (req, res) => {
+router.post("/find", (req, res) => {
     Students.findOne( {id:req.body.id})
-        .then(student => {res.send(student)})
+        .then(student => {
+            return res.status(200).json(student);
+        })
         .catch(err => {
             return res.status(400).json({StudentNotFound: "Error. No such ID exists."});
         })

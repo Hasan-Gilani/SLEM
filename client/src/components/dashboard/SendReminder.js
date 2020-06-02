@@ -1,20 +1,52 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
-
+import FlashMessage from "react-flash-message";
 class SendReminder extends Component{
     constructor(props){
         super(props);
         this.state = {
-            studentid: ""
+            studentid: "",
+            error: false,
+            msgSuccess: null,
+            msgFail: null,
         }
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+    onFindPress = e => {
+        this.setState({msgSuccess: null, msgFail: null});
+        e.preventDefault();
+        let arg = {id: this.state.studentid};
+        this.makeCall(arg)
+            .then(data => {
+                if(data.error === true){
+                    this.setState({
+                        error: true,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
+                else{
+                    this.setState({
+                        error: false,
+                        msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
+            })
+    }
+    makeCall = arg => {
+        return axios
+            .post("/api/records/sendReminder", arg)
+            .then(res => {
+                return res.data;
+            })
+            .catch(err => console.log(err));
+    }
     render() {
         return (
             <div>
@@ -40,6 +72,9 @@ class SendReminder extends Component{
                         </div>
                     </div>
                 </Form>
+                <div>
+                    {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+                </div>
             </div>
 
             </div>

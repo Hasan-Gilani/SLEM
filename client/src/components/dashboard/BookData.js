@@ -1,32 +1,15 @@
 import React, { Component } from 'react';
 import { Media } from 'reactstrap';
 
-class Bookdata extends Component{
+class BookData extends Component{
     constructor(props){
         super(props);
-        this.state={
-            books:[
-                {
-                   isbn: 0,
-                   name: "neha",
-                   subject: "neha",
-                   author: "neha" ,
-                   image: "assets/images/book.png"
-                },
-                {
-                    isbn: 1,
-                    name: "gilani",
-                    subject: "gilani",
-                    author: "gilani" ,
-                    image: "assets/images/book.png"
-
-                 },
-
-            ]
-        };
+        this.state= {
+            books: []
+        }
     }
     render(){
-        const bookdetails=this.state.books.map((book) =>{
+        const bookDetails=this.state.books.map((book) =>{
             return (
                 <div key={book.isbn} className="col-12 mt-5">
                     <Media tag="li">
@@ -47,7 +30,7 @@ class Bookdata extends Component{
             <div className="container">
                 <div className="row">
                     <Media list>
-                        {bookdetails}
+                        {bookDetails}
                     </Media>
                 </div>
             </div>
@@ -55,4 +38,4 @@ class Bookdata extends Component{
 
     }
 }
-export default Bookdata;
+export default BookData;

@@ -4,8 +4,30 @@ router = express.Router();
 const Record = require("../../models/Records")
 const Book = require("../../models/Books")
 const Student = require("../../models/Students")
+const borrowNotifier = require("../api/mailer").borrow;
+const manualNotifier = require("../api/mailer").manual;
 
-function initDate(bDate, rDate){
+validateLoanForm = arg => {
+    let inputs = Object.keys(arg);
+    let empty = inputs.filter(i => {
+        return arg[i].length === 0;
+    });
+    empty.forEach(key => {
+        let val = key.charAt(0).toUpperCase() + key.slice(1);
+        throw `${val} cannot be empty. Kindly fill in the correct detail. Please note that All fields are required.`;
+    });
+    if(/^\d{13}$/.test(arg.isbn) === false)
+        throw "ISBN must consist of exactly 13 digits"
+    let d1 = new Date(arg.bdate), d2 =  new Date(arg.rdate), curDate = new Date();
+
+    if(d2 < d1)
+        throw "Due date must be greater than Loaning Date."
+    if(!(d1.getFullYear() === curDate.getFullYear() && d1.getMonth() === curDate.getMonth() && d1.getDate() === curDate.getDate()))
+        throw "Please enter today's date."
+    if(((d2 - d1)/(3600*1000*24)) > 14)
+        throw "Book cannot be loaned for more than 14 days.";
+}
+initDate = (bDate, rDate) => {
     let zone = new Date().toLocaleString("en-US", {timeZone: "Asia/Karachi"});
     let oldDate = new Date(zone + " UTC");
     let bdate = new Date(bDate);
@@ -15,40 +37,84 @@ function initDate(bDate, rDate){
     bdate.setMinutes(oldDate.getMinutes());
     bdate.setSeconds(oldDate.getSeconds());
 
-    rdate.setHours(oldDate.getHours());
-    rdate.setMinutes(oldDate.getMinutes());
-    rdate.setSeconds(oldDate.getSeconds());
+    rdate.setHours(23);
+    rdate.setMinutes(59);
+    rdate.setSeconds(59)
 
     return {bdate, rdate};
 }
 
+router.get("/findRecord/:isbn", (req, res) => {
+    Book.findOne({isbn: req.params.isbn})
+        .then(bookData => {
+            if(!bookData)
+                throw "No such book exists in the records."
+            Record.aggregate([{$match: { books: {$elemMatch: {isbn: req.params.isbn}}}},
+                {$project: {_id: 0, id: 1,
+                        books: {$filter: {input: "$books", as: "b", cond: {$eq: ["$$b.isbn", req.params.isbn]}}}}}
+            ])
+                .then(records => {
+                    let ans = {};
+                    ans.totalAssignment = `This book has been assigned to ${records.length} individual(s)`;
+                    records.forEach(record => {
+                        ans[record.id] = {
+                            'Loaning Date': record.books[0].bdate,
+                            'Return Date': record.books[0].rdate
+                        };
+                    });
+                    ans.error = false;;
+                    ans.bookInfo = bookData;
+                    res.status(200);
+                    res.send(ans)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            res.status(400);
+            res.send({error: true, message: err});
+        });
+});
 
 router.put("/loanBook", (req, res) => {
+    try {
+        validateLoanForm(req.body)
+    }
+    catch (e) {
+        res.status(400);
+        res.send({error: true, message: e});
+        return;
+    }
     Student.findOne({id: req.body.id})// Find the student with the given ID
         .then(student => {
         if(!student){  // If no such student exists, return an error.
-            return res.status(404).json({error: true, message: "No such student exists"});
+            res.status(400);
+            res.send({error: true, message: "No such student exists"});
+
         } else if(student.surcharge >= 300){  //If student exists but surcharge exceeds, throw an error.
-            return res.status(403).json({error: true, message: "Surcharge amount exceeds PKR 299/-. " +
-                    "Please pay the amount to loan further books."});
+            res.status(4000);
+            res.send({error: true, message: "Surcharge amount exceeds PKR 299/-. Please pay the amount to loan further books."});
         }
         else{
             Book.findOne({isbn: req.body.isbn})
                 .then(bookData => { // See if the book exists in the database.
                     if(!bookData){  //It doesn't exist
-                        return res.status(404).json({error: true, message: "No such book exists."} );
+                        res.status(400);;
+                        res.send({error: true, message: "No such book exists."} );
                     } else{  //Book exists. Check for its number of copies.
-                        const copies = parseInt(bookData.copies, 10);
+                        const copies = bookData.copies;
                         if(copies === 0){  //No copies available. Throw an error.
-                            return res.status(403).json({error: true, message: "All copies have been loaned for the moment."});
+                            res.status(400)
+                            res.send({error: true, message: "All copies have been loaned for the moment."});
                         }
                         else{  // Find the student in the record
                             Record.findOne({id: req.body.id})
                                 .then(record => {
                                     let ans = {}
-                                    let isAddable = true  //Flag variable. will be set to false in case if any test fails.
+                                    let isAddable = true;  //Flag variable. will be set to false in case if any test fails.
                                     if(record){  //If the student is present in the record already,
-                                        console.log(record)  //printing for debug purposes.
+                                        // console.log(record)  //printing for debug purposes.
                                         record.books.forEach(item => {
                                             if(item.isbn === req.body.isbn){
                                                 isAddable = false;
@@ -71,22 +137,23 @@ router.put("/loanBook", (req, res) => {
                                                         "rdate": dates.rdate
                                                     }}},
                                             {upsert: true, useFindAndModify: false})  //Add the student record if none exists before it.
-                                            .then(ans => {
-                                                let newCopies = (copies - 1).toString(10)  //Reduce the count of copies by 1.
-                                                // console.log(newCopies)
-                                                Book.updateOne({isbn: req.body.isbn}, {$set: {"copies": newCopies}})
-                                                    .then(ans => {  // Book assigned. Send the success response
+                                            .then(() => {
+                                                borrowNotifier(req.body.id, bookData, dates.bdate.toString(), dates.rdate.toString());
+                                                Book.updateOne({isbn: req.body.isbn}, {$inc: {copies: -1}})
+                                                    .then(() => {  // Book assigned. Send the success response
                                                         return res.status(200).json({
                                                             error: false,
-                                                            message: `Book assigned to student ${req.body.id}`
+                                                            message: `Book assigned to student ${req.body.id}. You will receive an email
+                                                            confirmation soon.`,
                                                         });
                                                     })
-                                                    .catch(err => console.log(err))
+                                                    .catch(err => console.log(err));
                                             })
                                             .catch(err => console.log(err))
                                     }
                                     else{  //send the error.
-                                        return res.status(403).json(ans); //send error.
+                                        res.status(400)
+                                        res.send(ans);//send error.
                                         // console.log("")
                                     }
                                 })
@@ -97,6 +164,63 @@ router.put("/loanBook", (req, res) => {
         }
     })
         .catch(err => console.log(err))
+});
+
+router.delete("/returnBook", (req, res) => {
+    Student.findOne({id: req.body.id})
+        .then(student => {
+            if(!student){
+                return res.status(200).json({error: true, message: 'No such student exists'});
+            }
+            else if(student.surcharge > 0){
+                return res.status(200).json({error: true, message: `Sorry, You have RS ${student.surcharge}/- due. Please pay before returning the book.`});
+            }
+            else {
+                Record.updateOne({id: req.body.id}, {$pull: {books: {isbn: req.body.isbn}}})
+                    .then(toBeDel => {
+                        if(toBeDel){
+                            if(toBeDel.nModified === 1){
+                                Book.updateOne({isbn: req.body.isbn}, { $inc: {copies: 1}})
+                                    .then( () => {
+                                        return res.status(200).json({error: false, message: 'Book Returned. Thank you!'})
+                                    })
+                                    .catch();
+                            }
+                            else{
+                                return res.status(200).json({message: "User has not loaned this book. Return Failed"})
+                            }
+                        }
+                        else{
+                            return res.status(200).json({error: true, message: "Error, No such book is owned by user."});
+                        }
+                    })
+                    .catch(err => console.log(err))
+            }
+        })
+});
+
+router.post("/sendReminder", (req, res) => {
+    Record.findOne({id: req.body.id})
+        .then(record => {
+            if(!record){
+                return res.status(200).json({error: true, message: "No record exists against the given ID."});
+            }
+            else{
+                Student.findOne({id: req.body.id}, {_id: 0, id: 0})
+                    .then(student => {
+                        let sent = manualNotifier(record.id, record.books, student.fname + " " + student.lname, student.surcharge);
+                        if(sent)
+                            return res.status(200).json({error: false, message: `Mail Recipient Name: ${student.fname + " " + student.lname}.\nNotification Sent Successfully`});
+                        else{
+                            return res.status(200).json({error: true, message: `Mail Could not be sent. Sorry`});
+                        }
+                    })
+                    .catch(() => {
+                        return res.status(200).json({error: true, message: "Error while searching Student Record."});
+                    });
+            }
+        })
+        .catch(err => {return res.status(200).json({error: true, message: "Error while searching student Record."})});
 });
 
 module.exports = router;

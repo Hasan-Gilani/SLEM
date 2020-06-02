@@ -2,21 +2,48 @@ import React, { Component } from "react";
 import  { delBook } from "../../crudActions/deleteBook";
 import PropTypes from "prop-types"
 import {connect} from "react-redux";
+import axios from 'axios';
+import FlashMessage from "react-flash-message";
 
 class DelForm extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            isbn: ""
+            isbn: "",
+            error: "",
+            msgSuccess: "",
+            msgFail: ""
         };
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
     onSubmit = e => {
+        this.setState({msgSuccess: null, msgFail: null});
         e.preventDefault();
-        this.props.delBook(this.state.isbn);
+        this.makeCall()
+            .then(data => {
+                console.log(data);
+                if(data.error === true){
+                    this.setState({
+                        error: true,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    });
+                }
+                else{
+                    this.setState({
+                        error: false,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
+            })
     };
+    makeCall = () => {
+        return axios
+                .delete(`/api/books/deleteBook/${this.state.isbn}`)
+                .then(response =>{ return response.data;})
+                .catch(error => { return error.response.data;});
+    }
     render(){
         return(
             <div className="container">
@@ -50,6 +77,9 @@ class DelForm extends Component{
                                 Delete
                             </button>
                         </form>
+                        <div>
+                            {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+                        </div>
                     </div>
                 </div>
             </div>

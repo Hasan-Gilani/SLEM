@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import Link from "react-router-dom/es/Link";
 import { Navbar, NavbarBrand , Button} from 'reactstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -11,7 +10,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
 import 'react-bootstrap';
 import NewUser from "./NewUser";
-import Findform from "./FindForm";
+import FindForm from "./FindForm";
 import AddForm from "./AddForm";
 import ImportBook from './ImportBook';
 import DelForm from "./DelForm";
@@ -333,7 +332,7 @@ class ManageLibrary extends Component {
                               <Tab.Content>
                               <Tab.Pane eventKey="#link50">
                                   <div>
-                                  <Findform />
+                                  <FindForm />
 
                                   </div>
                                 </Tab.Pane>

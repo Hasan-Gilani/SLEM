@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import StudentRecord from "../layout/StudentRecord";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
+import { Col} from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 
 class SearchStudentRecord extends Component{
@@ -17,6 +16,22 @@ class SearchStudentRecord extends Component{
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+    onFindPress = () => {
+        let arg = {id: this.state.studentid};
+        this.makeCall(arg)
+            .then(value => {
+                console.log(value);
+            })
+            .catch(err => console.log(err));
+    }
+    makeCall = arg => {
+        return axios
+                    .post("/api/students/find", arg)
+                    .then(ans => {
+                        return ans;
+                    })
+                    .catch(err => console.log(err));
+    }
     render() {
         return (
             <div>

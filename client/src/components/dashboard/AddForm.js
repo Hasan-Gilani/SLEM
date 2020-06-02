@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Col } from 'react-bootstrap';
+import FlashMessage from "react-flash-message";
 import 'font-awesome/css/font-awesome.min.css';
 import axios from "axios";
 
@@ -14,29 +14,46 @@ class AddForm extends Component{
             title: "",
             subject: "",
             copies: "",
-            errors: {}
-        };
+            error: false,
+            msgSuccess: null,
+            msgFail: null
+        }
     }
-
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
-
     onSubmit = e => {
+        this.setState({msgSuccess: null, msgFail: null});
         e.preventDefault();
-        const bookData = {
-            isbn: this.state.isbn,
-            title: this.state.title,
-            subject: this.state.subject,
-            copies: this.state.copies
-        };
-        axios
-            .post("/api/books/Addbook", bookData)
-            .then(res => {
-                console.log(``)
+        const bookData = { isbn: this.state.isbn, title: this.state.title, subject: this.state.subject, copies: this.state.copies};
+        this.makeCall(bookData)
+            .then((data) => {
+                if(data.error === true){
+                    this.setState({
+                        error: true,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
+                else{
+                    this.setState({
+                        error: false,
+                        msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
             })
-            .catch(err => {console.log(err)}
-            );
+            .catch(err => console.log(err));
+    }
+    makeCall = bookData => {
+        return axios
+                .post("/api/books/Addbook", bookData)
+                .then( (res) => {
+                    return res.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                        return err.response.data;
+                    }
+                );
     };
 
 
@@ -51,7 +68,7 @@ class AddForm extends Component{
                                 ISBN
                             </Form.Label>
                             <Col>
-                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
+                                <Form.Control id="isbn" type="text"  pattern="[0-9]*" minLength="13" maxLength="13" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>
@@ -97,14 +114,14 @@ class AddForm extends Component{
                         </div>
                     </div>
                 </Form>
-            </div>
+                    <div>
+                        {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+                    </div>
+                </div>
             </div>
         );
     }
 }
-AddForm.propTypes = {
-    addBook: PropTypes.func.isRequired,
-};
 
 
 export default AddForm;

@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux"
+import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Row, Col, Grid, Jumbotron } from 'react-bootstrap';
+import { Col  } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
+import FlashMessage from "react-flash-message";
 
 class NewLoan extends Component{
     constructor(props) {
@@ -13,11 +13,44 @@ class NewLoan extends Component{
             isbn: "",
             studentid: "",
             issuedate: "",
-            duedate:""
+            duedate:"",
+            error: false,
+            msgSuccess: null,
+            msgFail: null
         };
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
+    }
+    onSubmit = e => {
+        e.preventDefault();
+        this.setState({msgSuccess: null, msgFail: null});
+        let data = {id: this.state.studentid, isbn: this.state.isbn, bdate: this.state.issuedate, rdate: this.state.duedate};
+        this.makeCall(data)
+            .then((ans) => {
+                if(ans.error === true){
+                    this.setState({
+                        error: true,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{ans.message}</p></FlashMessage>
+                    })
+                }
+                else{
+                    this.setState({
+                        error: false,
+                        msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{ans.message}</p></FlashMessage>
+                    })
+                }
+            })
+    }
+    makeCall = data => {
+        return axios
+            .put("/api/records/loanBook", data)
+            .then((res) => {
+                return res.data;
+            })
+            .catch(err => {
+                return err.response.data
+            });
     }
     render() {
         return(
@@ -78,19 +111,13 @@ class NewLoan extends Component{
                         </div>
                     </div>
                 </Form>
+                <div>
+                    {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+                </div>
             </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    isbn: state.isbn,
-    studentid: state.studentid,
-    issuedate: state.issuedate,
-    duedate: state.duedate
-});
-
-export default connect(
-    mapStateToProps, { NewLoan }
-) (NewLoan);
+export default NewLoan;

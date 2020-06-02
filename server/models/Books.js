@@ -16,7 +16,7 @@ const BookSchema = new Schema({
         required: true
     },
     copies: {
-        type: String,
+        type: Number,
         required: true
     },
     available: {
