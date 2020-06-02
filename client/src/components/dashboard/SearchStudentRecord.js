@@ -26,11 +26,11 @@ class SearchStudentRecord extends Component{
     }
     makeCall = arg => {
         return axios
-                    .post("/api/students/find", arg)
-                    .then(ans => {
+                .post("/api/students/find", arg)
+                .then(ans => {
                         return ans;
                     })
-                    .catch(err => console.log(err));
+                .catch(err => console.log(err));
     }
     render() {
         return (

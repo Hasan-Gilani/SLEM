@@ -45,7 +45,9 @@ class SendReminder extends Component{
             .then(res => {
                 return res.data;
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                return err.response.data;
+            });
     }
     render() {
         return (

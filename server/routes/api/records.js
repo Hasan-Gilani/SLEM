@@ -93,7 +93,7 @@ router.put("/loanBook", (req, res) => {
             res.send({error: true, message: "No such student exists"});
 
         } else if(student.surcharge >= 300){  //If student exists but surcharge exceeds, throw an error.
-            res.status(4000);
+            res.status(400);
             res.send({error: true, message: "Surcharge amount exceeds PKR 299/-. Please pay the amount to loan further books."});
         }
         else{
@@ -166,20 +166,22 @@ router.put("/loanBook", (req, res) => {
         .catch(err => console.log(err))
 });
 
-router.delete("/returnBook", (req, res) => {
+router.post("/returnBook", (req, res) => {
     Student.findOne({id: req.body.id})
         .then(student => {
             if(!student){
-                return res.status(200).json({error: true, message: 'No such student exists'});
+                res.status(400);
+                res.send({error: true, message: 'No such student exists'});
             }
             else if(student.surcharge > 0){
-                return res.status(200).json({error: true, message: `Sorry, You have RS ${student.surcharge}/- due. Please pay before returning the book.`});
+                res.status(200);
+                res.send({error: true, message: `Sorry, You have RS ${student.surcharge}/- due. Please pay before returning the book.`});
             }
             else {
                 Record.updateOne({id: req.body.id}, {$pull: {books: {isbn: req.body.isbn}}})
-                    .then(toBeDel => {
-                        if(toBeDel){
-                            if(toBeDel.nModified === 1){
+                    .then(toBeMod => {
+                        if(toBeMod){
+                            if(toBeMod.nModified === 1){
                                 Book.updateOne({isbn: req.body.isbn}, { $inc: {copies: 1}})
                                     .then( () => {
                                         return res.status(200).json({error: false, message: 'Book Returned. Thank you!'})
@@ -187,11 +189,13 @@ router.delete("/returnBook", (req, res) => {
                                     .catch();
                             }
                             else{
-                                return res.status(200).json({message: "User has not loaned this book. Return Failed"})
+                                res.status(400);
+                                res.send({message: "User has not loaned this book. Return Failed"})
                             }
                         }
                         else{
-                            return res.status(200).json({error: true, message: "Error, No such book is owned by user."});
+                            res.status(400);
+                            res.send({error: true, message: "Error, No such book is owned by user."});
                         }
                     })
                     .catch(err => console.log(err))
@@ -203,7 +207,8 @@ router.post("/sendReminder", (req, res) => {
     Record.findOne({id: req.body.id})
         .then(record => {
             if(!record){
-                return res.status(200).json({error: true, message: "No record exists against the given ID."});
+                res.status(400);
+                res.send({error: true, message: "No record exists against the given ID."});
             }
             else{
                 Student.findOne({id: req.body.id}, {_id: 0, id: 0})
@@ -212,15 +217,19 @@ router.post("/sendReminder", (req, res) => {
                         if(sent)
                             return res.status(200).json({error: false, message: `Mail Recipient Name: ${student.fname + " " + student.lname}.\nNotification Sent Successfully`});
                         else{
-                            return res.status(200).json({error: true, message: `Mail Could not be sent. Sorry`});
+                            res.status(400)
+                            res.send({error: true, message: `Mail Could not be sent. Sorry`});
                         }
                     })
                     .catch(() => {
-                        return res.status(200).json({error: true, message: "Error while searching Student Record."});
+                        res.status(400);
+                        res.send({error: true, message: "Error while searching Student Record."});
                     });
             }
         })
-        .catch(err => {return res.status(200).json({error: true, message: "Error while searching student Record."})});
+        .catch(err => {
+            res.status(400);
+            res.send({error: true, message: "Error while searching student Record."})});
 });
 
 module.exports = router;
