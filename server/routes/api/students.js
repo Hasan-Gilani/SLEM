@@ -2,14 +2,30 @@ const express = require("express");
 const router = express.Router();
 
 const Students = require("../../models/Students");
+const Record = require("../../models/Records");
 
-router.post("/find", (req, res) => {
-    Students.findOne( {id:req.body.id})
+router.get("/find/:id", (req, res) => {
+    Students.findOne( {id:req.params.id})
         .then(student => {
-            return res.status(200).json(student);
-        })
+            if(student) {
+                let ans = {};
+                Record.findOne({id: req.params.id})
+                    .then(record => {
+                        if(record) {
+                            ans.record = record;
+                        }
+                        res.send(ans);
+                        res.status(200);
+                    })
+                    .catch(err => console.log(err));
+                }
+            else{
+                throw {error: true, message: "No such student exists in records"};
+            }
+            })
         .catch(err => {
-            return res.status(400).json({StudentNotFound: "Error. No such ID exists."});
+            res.status(400);;
+            res.send(err);
         })
 
 });
