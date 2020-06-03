@@ -35,7 +35,7 @@ class SearchStudentRecord extends Component{
                     this.setState({
                         error: false,
                         // msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
-                    })
+                        })
                 }
             })
             .catch(err => {

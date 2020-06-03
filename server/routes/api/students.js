@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Students = require("../../models/Students");
 const Record = require("../../models/Records");
+const Book = require("../../models/Books");
 
 router.get("/find/:id", (req, res) => {
     Students.findOne( {id:req.params.id})
@@ -12,10 +13,24 @@ router.get("/find/:id", (req, res) => {
                 Record.findOne({id: req.params.id})
                     .then(record => {
                         if(record) {
-                            ans.record = record;
+                            let isbns = record.books.map(elem => elem.isbn);
+                            console.log(isbns);
+                            Book.find({isbn: {$in: isbns}})
+                                .then(books => {
+                                    let i = 0;
+                                    books.forEach(book => {
+                                        record.books[i].title = book.title;
+                                        record.books[i].subject = book.subject;
+                                        record.books[i].bdate = record.books[i].bdate.toString().split(" GMT")[0];
+                                        record.books[i].rdate = record.books[i].rdate.toString().split(" GMT")[0];
+                                        ++i;
+                                    })
+                                    ans.record = record;
+                                    res.status(200);
+                                    res.send(ans)
+                                })
+                                .catch(err => console.log(err))
                         }
-                        res.send(ans);
-                        res.status(200);
                     })
                     .catch(err => console.log(err));
                 }
