@@ -5,32 +5,52 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col} from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
+import FlashMessage from "react-flash-message";
 
 class SearchStudentRecord extends Component{
     constructor(props){
         super(props);
         this.state = {
-            studentid: ""
+            studentid: "",
+            error: true,
+            msgSuccess: null,
+            msgFail: null,
         }
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
     onFindPress = () => {
-        let arg = {id: this.state.studentid};
-        this.makeCall(arg)
-            .then(value => {
-                console.log(value);
+        this.setState({error: false, msgSuccess: null, msgFail: null});
+        this.makeCall()
+            .then(data => {
+                if(data.error === true){
+                    this.setState({
+                        error: true,
+                        msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
+                else{
+                    console.log('henlo deer :) ', data);
+                    this.setState({
+                        error: false,
+                        // msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                    })
+                }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+            });
     }
-    makeCall = arg => {
+    makeCall = () => {
         return axios
-                .post("/api/students/find", arg)
+                .get(`/api/students/find/${this.state.studentid}`)
                 .then(ans => {
                         return ans;
                     })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    return err.response.data;
+                });
     }
     render() {
         return (
@@ -57,6 +77,9 @@ class SearchStudentRecord extends Component{
                         </div>
                     </div>
                 </Form>
+                <div>
+                    {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+                </div>
             </div>
 
             </div>
