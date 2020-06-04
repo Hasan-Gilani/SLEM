@@ -49,7 +49,7 @@ router.get("/find/:id", (req, res) => {
 router.post("/add", (req, res) => {
     Students.findOne({id: req.body.id}).then(student => {
         if(student){
-            res.status(406).json({StudentFound: "Error. Students already exists."});
+            res.status(400).json({StudentFound: "Error. Students already exists."});
         }
         else{
             new Students({
