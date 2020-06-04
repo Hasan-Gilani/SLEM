@@ -18,6 +18,7 @@ import SearchStudentRecord from "./SearchStudentRecord";
 import SendReminder from "./SendReminder";
 import RemoveUser from "./RemoveStudent";
 import FinePayement from "./FinePayement";
+import ReturnLoan from"./ReturnLoan";
 class ManageLibrary extends Component {
   onLogoutClick = e => {
     e.preventDefault();
@@ -132,7 +133,7 @@ class ManageLibrary extends Component {
                                
                                 <Tab.Pane eventKey="#link43">
                                   <div>
-
+                                    <ReturnLoan/>
                                   </div>
                                 </Tab.Pane>
                                 
