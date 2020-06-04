@@ -53,7 +53,7 @@ router.post("/Addbook", (req, res) => {
 
 router.delete("/deleteBook/:isbn", (req, res) => {
     const deleted = req.params.isbn;
-    Record.findOne({isbn: req.params.isbn})
+    Record.findOne({"books.isbn": req.params.isbn})
         .then(record => {
             if(record){
                 res.status(400);
