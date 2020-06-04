@@ -6,6 +6,7 @@ const Book = require("../../models/Books")
 const Student = require("../../models/Students")
 const borrowNotifier = require("../api/mailer").borrow;
 const manualNotifier = require("../api/mailer").manual;
+const returnNotifier = require("../api/mailer").return;
 
 validateLoanForm = arg => {
     let inputs = Object.keys(arg);
@@ -22,8 +23,12 @@ validateLoanForm = arg => {
 
     if(d2 < d1)
         throw "Due date must be greater than Loaning Date."
-    if(!(d1.getFullYear() === curDate.getFullYear() && d1.getMonth() === curDate.getMonth() && d1.getDate() === curDate.getDate()))
-        throw "Please enter today's date."
+    if(( Math.floor((curDate - d1)/(3600 * 24 * 1000)) < -1 )){
+        console.log(curDate, d1);
+        console.log(( Math.floor((curDate - d1)/(3600 * 24 * 1000))));
+        throw "Please enter today's date.";
+    }
+        
     if(((d2 - d1)/(3600*1000*24)) > 14)
         throw "Book cannot be loaned for more than 14 days.";
 }
@@ -39,7 +44,7 @@ initDate = (bDate, rDate) => {
 
     rdate.setHours(23);
     rdate.setMinutes(59);
-    rdate.setSeconds(59)
+    rdate.setSeconds(59);
 
     return {bdate, rdate};
 }
@@ -138,18 +143,36 @@ router.put("/loanBook", (req, res) => {
                                                     }}},
                                             {upsert: true, useFindAndModify: false})  //Add the student record if none exists before it.
                                             .then(() => {
-                                                borrowNotifier(req.body.id, bookData, dates.bdate.toString(), dates.rdate.toString());
                                                 Book.updateOne({isbn: req.body.isbn}, {$inc: {copies: -1}})
                                                     .then(() => {  // Book assigned. Send the success response
-                                                        return res.status(200).json({
-                                                            error: false,
-                                                            message: `Book assigned to student ${req.body.id}. You will receive an email
-                                                            confirmation soon.`,
-                                                        });
-                                                    })
-                                                    .catch(err => console.log(err));
+                                                        let promise = borrowNotifier(req.body.id, bookData, dates.bdate.toString(), dates.rdate.toString());
+                                                        promise.
+                                                            then(ans =>{
+                                                                if(!ans){
+                                                                    throw {
+                                                                        error: true,
+                                                                        message: `Book assigned to ${req.body.id}, but error sending notification. Please manually check records to confirm`};
+                                                                        }
+                                                                else{
+                                                                    return res.status(200).json({
+                                                                        error: false,
+                                                                        message: `Book assigned to student ${req.body.id}. You will receive an email
+                                                                        confirmation soon.`
+                                                                    })
+                                                                }
+                                                            })
+                                                            .catch(err => {
+                                                                res.status(400)
+                                                                res.send(err);
+                                                            })
+
+                                                        })
+                                                    .catch(err => {
+                                                        res.status(400);
+                                                        res.send(err);
+                                                    });
                                             })
-                                            .catch(err => console.log(err))
+                                            .catch(err => console.log(err));
                                     }
                                     else{  //send the error.
                                         res.status(400)
@@ -182,11 +205,26 @@ router.post("/returnBook", (req, res) => {
                     .then(toBeMod => {
                         if(toBeMod){
                             if(toBeMod.nModified === 1){
-                                Book.updateOne({isbn: req.body.isbn}, { $inc: {copies: 1}})
-                                    .then( () => {
-                                        return res.status(200).json({error: false, message: 'Book Returned. Thank you!'})
-                                    })
-                                    .catch();
+                                Book.findOneAndUpdate({isbn: req.body.isbn}, { $inc: {copies: 1}}, {useFindAndModify: false})
+                                    .then( (updated) => {
+                                        let promise = returnNotifier(req.body.id, updated)
+                                        promise
+                                            .then(ans => {
+                                                if(ans){
+                                                    return res.status(200).json({error: false, message: 'Book Returned. Thank you!'});
+                                                }
+                                                else{
+                                                    throw {error: true, message: "Book returned but mail could not be sent"};
+                                                }
+                                            })
+                                            .catch(err => {
+                                                res.status(400).send(err);
+                                            })
+                                        })
+                                    .catch(err => {
+                                        res.status(400);
+                                        res.send(err);
+                                    });
                             }
                             else{
                                 res.status(400);
@@ -213,13 +251,20 @@ router.post("/sendReminder", (req, res) => {
             else{
                 Student.findOne({id: req.body.id}, {_id: 0, id: 0})
                     .then(student => {
-                        let sent = manualNotifier(record.id, record.books, student.fname + " " + student.lname, student.surcharge);
-                        if(sent)
-                            return res.status(200).json({error: false, message: `Mail Recipient Name: ${student.fname + " " + student.lname}.\nNotification Sent Successfully`});
-                        else{
-                            res.status(400)
-                            res.send({error: true, message: `Mail Could not be sent. Sorry`});
-                        }
+                        let isSent = manualNotifier(record.id, record.books, student.fname + " " + student.lname, student.surcharge);
+                        isSent
+                            .then(ans => {
+                                if(!ans){
+                                    throw {error: true, message: `Mail Could not be sent. Sorry`}
+                                }
+                                else {
+                                    return res.status(200).json({error: false, message: `Mail Recipient Name: ${student.fname + " " + student.lname}.\nNotification Sent Successfully`});
+                                }
+                            })
+                            .catch(err => {
+                                res.status(400)
+                                res.send(err);
+                            })
                     })
                     .catch(() => {
                         res.status(400);
