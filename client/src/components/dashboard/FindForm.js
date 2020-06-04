@@ -70,15 +70,16 @@ class FindForm extends Component{
     render() {
         return (
             <div>
+                <h2>Search Book</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 ISBN
                             </Form.Label>
                             <Col>
-                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
+                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN" onChange={this.onChange} value={this.state.isbn}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>

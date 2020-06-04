@@ -62,17 +62,16 @@ class ReturnLoan extends Component{
                 <Form noValidate onSubmit={this.onSubmit}>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Student ID
                             </Form.Label>
                             <Col>
-                                <Form.Control id="studentid" type="text"  placeholder="Enter student Id " onChange={this.onChange} value={this.state.studentid}/>
+                                <Form.Control id="studentid" type="text"  placeholder="Enter Student ID " onChange={this.onChange} value={this.state.studentid}/>
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-                    <Form.Group as={Col} >
+                    
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 ISBN
                             </Form.Label>
                             <Col>

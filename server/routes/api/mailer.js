@@ -63,7 +63,7 @@ async function manualNotifier(id, bookData, name, surcharge){
 
 async function borrowNotifier(toID, bookDetails, bdate, rdate) {
     let recipient = toID + "@nu.edu.pk";
-    let mailOptions = { from: "slem58370@gmail.com", subject: 'This is a borrow notification', to: recipient};
+    let mailOptions = { from: "slem58370@gmail.com", subject: 'Book Borrow Notification', to: recipient};
     mailOptions.html = bookNotes.borrowNote(bookDetails, bdate, rdate);
     try {
         let result = await mailSend(mailOptions);
@@ -78,7 +78,7 @@ async function borrowNotifier(toID, bookDetails, bdate, rdate) {
 
 async function returnNotifier(toID, bookDetails){
     let recipient = toID + "@nu.edu.pk",
-    mailOptions = { from: "slem58370@gmail.com", subject: 'This is a return notificaiton', to: recipient},
+    mailOptions = { from: "slem58370@gmail.com", subject: 'Book Return Notification', to: recipient},
     date = new Date().toString();
     mailOptions.html = bookNotes.returnNote(bookDetails, date);
     let result;
@@ -91,6 +91,20 @@ async function returnNotifier(toID, bookDetails){
     }
 
 }
+
+async function registerNotifier(toID, password,fname, lname){
+    let mailOptions = { from: "slem58370@gmail.com", subject: 'Notification for Registration', to: toID + "@nu.edu.pk"}
+    mailOptions.html = bookNotes.registerNote(toID, password,fname, lname);
+    try{
+        await mailSend(mailOptions)
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+
+}
+
 
 cron.schedule("00 17 13 * * *", () => {
     console.log("starting automated Mail at 13:07");
@@ -121,5 +135,5 @@ cron.schedule("00 17 13 * * *", () => {
 });
 
 
-module.exports = {borrow: borrowNotifier, manual: manualNotifier, return: returnNotifier};
-// module.exports.manualNotifier = manualNotifier;
+module.exports = {borrow: borrowNotifier, manual: manualNotifier, return: returnNotifier, register: registerNotifier};
+

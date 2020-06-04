@@ -55,15 +55,16 @@ class SearchStudentRecord extends Component{
     render() {
         return (
             <div>
+                <h2>Search Student Loan</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form >
                     <Form.Group as={Col}>
                         <Form.Row>
-                            <Form.Label column lg={2}>
-                            Students ID
+                            <Form.Label column lg={4}>
+                            Student ID
                             </Form.Label>
                             <Col>
-                                <Form.Control id="studentid" type="text" placeholder="Enter Students Id " onChange={this.onChange} value={this.state.studentid}/>
+                                <Form.Control id="studentid" type="text" placeholder="Enter Student ID " onChange={this.onChange} value={this.state.studentid}/>
                             </Col>
                         </Form.Row>
                     </Form.Group>

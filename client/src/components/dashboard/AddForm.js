@@ -60,44 +60,39 @@ class AddForm extends Component{
     render() {
         return(
             <div>
+                <h2>Add New Book</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 <Form noValidate onSubmit={this.onSubmit}>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 ISBN
                             </Form.Label>
                             <Col>
                                 <Form.Control id="isbn" type="text"  pattern="[0-9]*" minLength="13" maxLength="13" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
+                  
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Title
                             </Form.Label>
                             <Col>
                                 <Form.Control type="text"  id="title" placeholder="Enter Title" onChange={this.onChange} value={this.state.name} />
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
+                   
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Subject
                             </Form.Label>
                             <Col>
                                 <Form.Control id="subject" type="text" placeholder="Enter book subject"  onChange={this.onChange}  value={this.state.author}/>
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
+                 
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 No. of Copies
                             </Form.Label>
                             <Col>
