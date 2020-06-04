@@ -56,7 +56,7 @@ class ReturnLoan extends Component{
     render() {
         return(
             <div>
-                <h2>Delete Loan</h2>
+                <h2>Return Loan</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
 
                 <Form noValidate onSubmit={this.onSubmit}>
@@ -69,7 +69,7 @@ class ReturnLoan extends Component{
                                 <Form.Control id="studentid" type="text"  placeholder="Enter Student ID " onChange={this.onChange} value={this.state.studentid}/>
                             </Col>
                         </Form.Row>
-                    
+
                         <Form.Row>
                             <Form.Label column lg={4}>
                                 ISBN
@@ -82,7 +82,7 @@ class ReturnLoan extends Component{
 
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
-                            <Button variant="primary" type = "submit" className="fa fa-trash" onClick={this.deleteRecord}>Delete</Button>
+                            <Button variant="primary" type = "submit" className="fa fa-trash" onClick={this.deleteRecord}>Return</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
                             <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>

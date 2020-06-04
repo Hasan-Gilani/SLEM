@@ -32,7 +32,7 @@ class StudentRecord extends Component {
                 Sname: this.props.Sname,
                 issuedate: this.props.issuedate,
                 duedate: this.props.duedate,
-                status: this.props.satus
+                status: this.props.status
             })
         }
     }
@@ -87,33 +87,32 @@ class StudentRecord extends Component {
                                 </tr>
                             </thead>
 
-                    <tbody>
-                        <tr>
-                        <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                                <label className="custom-control-label" for="customCheck1"/>
-                            </div>
-                        </th>
-                        <td>{this.state.book}</td>
-                        <td>{this.state.studentid}</td>
-                        <td>{this.state.Sname}</td>
-                        <td>{this.state.issuedate}</td>
-                        <td>{this.state.duedate}</td>
-                        <td>Status</td>
-                        <td>
-                            <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
-                            <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>
-                            <button type="button" className="btn btn-danger"><i className="fa fa-trash-o"/></button>
-                        </td>
-                        </tr>
-                    </tbody>
+                            <tbody>
+                                <tr>
+                                <th scope="row">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                        <label className="custom-control-label" for="customCheck1"/>
+                                    </div>
+                                </th>
+                                <td>{this.state.book}</td>
+                                <td>{this.state.studentid}</td>
+                                <td>{this.state.Sname}</td>
+                                <td>{this.state.issuedate}</td>
+                                <td>{this.state.duedate}</td>
+                                <td>Status</td>
+                                <td>
+                                    <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
+                                    <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>
+                                    <button type="button" className="btn btn-danger"><i className="fa fa-trash-o"/></button>
+                                </td>
+                                </tr>
+                            </tbody>
 
-                    </table>
+                        </table>
 
-                </div>
-
-                </div>
+                    </div>
+                    </div>
 
         );
     }
