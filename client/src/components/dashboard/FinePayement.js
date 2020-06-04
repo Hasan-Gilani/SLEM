@@ -6,13 +6,11 @@ import FlashMessage from "react-flash-message";
 import 'font-awesome/css/font-awesome.min.css';
 import axios from "axios";
 
-class NewUser extends Component{
+class FinePayement extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            studentid: "",
-            fname: "",
-            lname: ""
+            studentid: ""
         };
     }
 
@@ -23,7 +21,7 @@ class NewUser extends Component{
     render() {
         return(
             <div>
-                <h2>New Student</h2>
+                <h2>Remove Surcharge</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 
                 <Form noValidate onSubmit={this.onSubmit}>
@@ -38,31 +36,9 @@ class NewUser extends Component{
                         </Form.Row>
                     </Form.Group>
 
-                    <Form.Group as={Col} >
-                        <Form.Row>
-                            <Form.Label column lg={2}>
-                                First Name 
-                            </Form.Label>
-                            <Col>
-                                <Form.Control type="text"  id="fname" placeholder="Enter First Name" onChange={this.onChange} value={this.state.fname} />
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
-                        <Form.Row>
-                            <Form.Label column lg={2}>
-                                Last Name
-                            </Form.Label>
-                            <Col>
-                                <Form.Control id="lname" type="text" placeholder="Enter Last Name"  onChange={this.onChange}  value={this.state.lname}/>
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
-                            <Button variant="primary" type = "submit" className="fa fa-save" >Save</Button>
+                            <Button variant="primary" type = "submit" className="fa fa-minus-square" >Remove Surcharge </Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
                             <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
@@ -79,4 +55,4 @@ class NewUser extends Component{
 }
 
 
-export default NewUser;
+export default FinePayement;
