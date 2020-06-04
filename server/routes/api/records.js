@@ -28,7 +28,7 @@ validateLoanForm = arg => {
         console.log(( Math.floor((curDate - d1)/(3600 * 24 * 1000))));
         throw "Please enter today's date.";
     }
-        
+
     if(((d2 - d1)/(3600*1000*24)) > 14)
         throw "Book cannot be loaned for more than 14 days.";
 }
@@ -197,8 +197,8 @@ router.post("/returnBook", (req, res) => {
                 res.send({error: true, message: 'No such student exists'});
             }
             else if(student.surcharge > 0){
-                res.status(200);
-                res.send({error: true, message: `Sorry, You have RS ${student.surcharge}/- due. Please pay before returning the book.`});
+                res.status(400);
+                res.send({error: true, surcharge: student.surcharge,message: `Sorry, You have RS ${student.surcharge}/- due. Please pay before returning the book.`});
             }
             else {
                 Record.updateOne({id: req.body.id}, {$pull: {books: {isbn: req.body.isbn}}})
