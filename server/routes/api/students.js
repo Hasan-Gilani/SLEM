@@ -11,10 +11,10 @@ router.get("/find/:id", (req, res) => {
             if(student) {
                 let ans = {};
                 Record.findOne({id: req.params.id})
+
                     .then(record => {
                         if(record) {
                             let isbns = record.books.map(elem => elem.isbn);
-                            console.log(isbns);
                             Book.find({isbn: {$in: isbns}})
                                 .then(books => {
                                     let i = 0;
@@ -26,10 +26,11 @@ router.get("/find/:id", (req, res) => {
                                         ++i;
                                     })
                                     ans.record = record;
+
                                     res.status(200);
-                                    res.send(ans)
+                                    res.send(ans);
                                 })
-                                .catch(err => console.log(err))
+                                .catch(err => console.log(err));
                         }
                     })
                     .catch(err => console.log(err));
