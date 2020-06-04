@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import '../../App.css';
 import { logoutUser } from "../../actions/authActions";
 import { Navbar, NavbarBrand , Button} from 'reactstrap';
 import 'font-awesome/css/font-awesome.min.css';
@@ -71,7 +72,7 @@ class ManageLibrary extends Component {
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link31">
                           <div className="container">
                             <div className="row">
-                              <ListGroup horizontal>
+                              <ListGroup horizontal className="col-12">
                                 <ListGroup.Item action href="#link31" className="p-4 d-flex justify-content-around"><i className="fa fa-plus">New Student</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link32" className="p-4 d-flex justify-content-around"><i className="fa fa-remove">Remove Student</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link33" className="p-4 d-flex justify-content-around"><i className="fa fa-money">Fine Payement</i></ListGroup.Item>
@@ -108,7 +109,7 @@ class ManageLibrary extends Component {
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link40">
                           <div className="container">
                             <div className="row">
-                              <ListGroup horizontal>
+                              <ListGroup horizontal className="col-12">
                                 <ListGroup.Item action href="#link40" className="p-4 d-flex justify-content-around"><i className="fa fa-search">Search Student Loan</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link41" className="p-4 d-flex justify-content-around"><i className="fa fa-plus">New Loan</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link43" className="p-4 d-flex justify-content-around"><i className="fa fa-trash-o">Return Loan</i></ListGroup.Item>
@@ -156,7 +157,7 @@ class ManageLibrary extends Component {
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link50">
                           <div className="container">
                             <div className="row">
-                              <ListGroup horizontal>
+                              <ListGroup horizontal className="col-12">
                                 <ListGroup.Item action href="#link50" className="col-4 p-4 d-flex justify-content-around"><i className="fa fa-search">Search Book</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link51" className="col-4 p-4 d-flex justify-content-around"><i className="fa fa-plus">New Book</i></ListGroup.Item>
                                 <ListGroup.Item action href="#link53" className="col-4 p-4 d-flex justify-content-around"><i className="fa fa-trash-o">Delete</i></ListGroup.Item>

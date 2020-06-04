@@ -30,6 +30,7 @@ class LoanInfo extends Component {
     render() {
         return (
             <div className="px-4">
+                <h3>Lend to</h3>
                 <div className="table-wrapper table-responsive table-bordered ">
                     <table className="table table-hover mb-0" variant='dark' cellSpacing="0" width="100%">
                         <thead>

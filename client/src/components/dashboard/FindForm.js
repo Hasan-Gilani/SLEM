@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Book from "../layout/Book";
+import Book from "./Book";
 import LoanInfo from "./LoanInfo";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
