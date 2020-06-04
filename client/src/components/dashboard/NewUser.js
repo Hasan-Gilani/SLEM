@@ -23,35 +23,31 @@ class NewUser extends Component{
     render() {
         return(
             <div>
-                <h2>New Student</h2>
+                <h2>Add New Student</h2>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 
                 <Form noValidate onSubmit={this.onSubmit}>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Student ID
                             </Form.Label>
                             <Col>
                                 <Form.Control id="studentid" type="text"  placeholder="Enter student Id " onChange={this.onChange} value={this.state.studentid}/>
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
+                    
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 First Name 
                             </Form.Label>
                             <Col>
                                 <Form.Control type="text"  id="fname" placeholder="Enter First Name" onChange={this.onChange} value={this.state.fname} />
                             </Col>
                         </Form.Row>
-                    </Form.Group>
-
-                    <Form.Group as={Col} >
+                    
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Last Name
                             </Form.Label>
                             <Col>

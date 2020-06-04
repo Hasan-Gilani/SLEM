@@ -27,7 +27,7 @@ class RemoveUser extends Component{
                 <Form noValidate onSubmit={this.onSubmit}>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Student ID
                             </Form.Label>
                             <Col>

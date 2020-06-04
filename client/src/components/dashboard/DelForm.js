@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import  { delBook } from "../../crudActions/deleteBook";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { Col } from 'react-bootstrap';
 import PropTypes from "prop-types"
 import {connect} from "react-redux";
 import axios from 'axios';
@@ -45,43 +48,36 @@ class DelForm extends Component{
                 .catch(error => { return error.response.data;});
     }
     render(){
-        return(
-            <div className="container">
-                <div style={{marginTop: "4rem"}} className="row">
-                    <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                        <h4>
-                            <b>Delete Book</b>
-                        </h4>
-                    </div>
-                    <div className="input-field col s-12" style={{
-                        marginLeft:"20px"
-                    }}>
-                        <form noValidate onSubmit={this.onSubmit}>
-                            <h6>Enter isbn </h6>
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.isbn}
-                                id="isbn"
-                                type='text'
-                            />
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                            >
-                                Delete
-                            </button>
-                        </form>
-                        <div>
-                            {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
+        return (
+            <div>
+                <h2>Delete Book</h2>
+            <div className="container p-5 rounded mb-0 block-example border border-light">
+                <Form noValidate onSubmit={this.onSubmit}>
+                    <Form.Group as={Col} >
+                        <Form.Row>
+                            <Form.Label column lg={4}>
+                                ISBN
+                            </Form.Label>
+                            <Col>
+                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN" onChange={this.onChange} value={this.state.isbn}/>
+                            </Col>
+                        </Form.Row>
+                    </Form.Group>
+        
+                    <div className="row ml-auto">
+                        <div className="col-xs-2  p-2 block-example ml-auto">
+                            <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>
+                        </div>
+                        <div className="col-xs-2  p-2 block-example ">
+                            <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
                         </div>
                     </div>
+                </Form>
+                <div>
+                    {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
                 </div>
+            </div>
+        
             </div>
         );
     }

@@ -27,7 +27,7 @@ class FinePayement extends Component{
                 <Form noValidate onSubmit={this.onSubmit}>
                     <Form.Group as={Col} >
                         <Form.Row>
-                            <Form.Label column lg={2}>
+                            <Form.Label column lg={4}>
                                 Student ID
                             </Form.Label>
                             <Col>
@@ -38,7 +38,7 @@ class FinePayement extends Component{
 
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
-                            <Button variant="primary" type = "submit" className="fa fa-minus-square" >Remove Surcharge </Button>
+                            <Button variant="primary" type = "submit" className="fa fa-minus-square" >Remove Surcharge</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
                             <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
