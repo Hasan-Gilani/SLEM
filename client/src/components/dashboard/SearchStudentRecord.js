@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
+import StudentRecord from "./StudentRecord";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col} from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import FlashMessage from "react-flash-message";
-
+import RenderHeader from "./RenderHeader";
 class SearchStudentRecord extends Component{
     constructor(props){
         super(props);
@@ -15,6 +16,8 @@ class SearchStudentRecord extends Component{
             error: true,
             msgSuccess: null,
             msgFail: null,
+            datafetched: null,
+            displaystudent:[]
         }
     }
     onChange = e => {
@@ -31,9 +34,22 @@ class SearchStudentRecord extends Component{
                     })
                 }
                 else{
-                    console.log('henlo deer :) ', data);
+        
+                    console.log('henlo deer :) ', data['data']["record"].id);
+                        let x =0;
+                        let temp = data['data']["record"];
+                        let str=[x].toString();
+                        let flag=[]
+                        while (temp["books"][str]){
+                            let temp2=temp["books"][str];
+                            flag.push(<StudentRecord count={x+1}isbn={temp2.isbn} studentid={temp.id} issuedate={temp2.bdate} duedate={temp2.rdate} />)
+                            x+=1
+                            str=[x].toString();
+                        }
+                
                     this.setState({
                         error: false,
+                        displaystudent:flag
                         // msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
                         })
                 }
@@ -56,7 +72,7 @@ class SearchStudentRecord extends Component{
         return (
             <div>
                 <h2>Search Student Loan</h2>
-            <div className="container p-5 rounded mb-0 block-example border border-light">
+            <div className="row p-5 rounded mb-0 block-example border border-light">
                 <Form >
                     <Form.Group as={Col}>
                         <Form.Row>
@@ -78,9 +94,10 @@ class SearchStudentRecord extends Component{
                         </div>
                     </div>
                 </Form>
-                <div>
-                    {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
-                </div>
+            </div>
+            <div className="container p-5 rounded mb-0 block-example border border-light">
+                {(this.state.error) ? this.state.msgFail : <RenderHeader />}
+                {(this.state.error) ? this.state.msgFail : this.state.displaystudent}
             </div>
 
             </div>
