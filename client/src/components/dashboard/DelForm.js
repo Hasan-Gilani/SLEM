@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import  { delBook } from "../../crudActions/deleteBook";
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Col } from 'react-bootstrap';
 import PropTypes from "prop-types"
 import {connect} from "react-redux";
 import axios from 'axios';
 import FlashMessage from "react-flash-message";
+import Form from "react-bootstrap/Form";
+
 
 class DelForm extends Component{
     constructor(props) {
@@ -21,12 +22,11 @@ class DelForm extends Component{
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
-    onSubmit = e => {
+    onDeletePress = e => {
         this.setState({msgSuccess: null, msgFail: null});
         e.preventDefault();
         this.makeCall()
             .then(data => {
-                console.log(data);
                 if(data.error === true){
                     this.setState({
                         error: true,
@@ -36,7 +36,7 @@ class DelForm extends Component{
                 else{
                     this.setState({
                         error: false,
-                        msgFail: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                        msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
                     })
                 }
             })
@@ -63,21 +63,22 @@ class DelForm extends Component{
                             </Col>
                         </Form.Row>
                     </Form.Group>
-        
+
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
-                            <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>
+                            <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onDeletePress}>search</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
                             <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
                         </div>
                     </div>
-                </Form>
+                    </Form>
                 <div>
                     {(this.state.error) ? this.state.msgFail : this.state.msgSuccess}
                 </div>
+
             </div>
-        
+
             </div>
         );
     }

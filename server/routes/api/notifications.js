@@ -82,6 +82,18 @@ function getReturnNotification(book, rdate){
     return textBody.join("");
 }
 
+function getRegisterNotification(id, password, fname, lname) {
+    let textBody = [`<p><em><strong>Dear ${fname} ${lname},<br /></strong></em></p>
+                     <p>&emsp;&emsp; You have been registered in the SLEM system. You can now borrow books and sports good from using the SLEM mobile application. Following are your login credentials:<br /><br /></p>
+                     <ul>
+                     <li>UserID: ${id}</li>
+                     <li>Password: ${password}</li>
+                     </ul>
+                     <p><span style="text-decoration: underline;"><em><span style="color: #ff0000; text-decoration: underline;">This login information is sensitive. Do not share this information with anyone.<br /></span></em></span></p>
+                     <p style="font-size: 90%;"><em><span style="text-decoration: underline;">
+                     *This is a system generated E-mail. No response is required*</span></em></p>`]
+    return textBody.join("");
+    }
 
 
 
@@ -89,5 +101,6 @@ module.exports = {
     dailyBookNote: getDailyNotification,
     manualBookNote: getManualNotification,
     borrowNote: getBorrowNotification,
-    returnNote: getReturnNotification
+    returnNote: getReturnNotification,
+    registerNote: getRegisterNotification
 }

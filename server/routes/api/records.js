@@ -211,7 +211,7 @@ router.post("/returnBook", (req, res) => {
                                         promise
                                             .then(ans => {
                                                 if(ans){
-                                                    return res.status(200).json({error: false, message: 'Book Returned. Thank you!'});
+                                                    return res.status(200).json({error: false, message: 'Book Returned. You will receive a confirmation email soon. Thank you!'});
                                                 }
                                                 else{
                                                     throw {error: true, message: "Book returned but mail could not be sent"};
@@ -228,7 +228,7 @@ router.post("/returnBook", (req, res) => {
                             }
                             else{
                                 res.status(400);
-                                res.send({message: "User has not loaned this book. Return Failed"})
+                                res.send({ error: true,message: "User has not loaned this book. Return Failed"})
                             }
                         }
                         else{

@@ -2,28 +2,24 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 
-const StudentSchema = new Schema({
-    id: {
+const SportSchema = new Schema({
+    good_id: {
         type: String,
         required: true
     },
-    fname: {
+    good_type: {
         type: String,
         required: true
     },
-    lname: {
-        type: String,
-        required: true
-    },
-    password: {
+    copies: {
         type: Number,
         required: true
     },
-    surcharge: {
-        type: Number,
+    available: {
+        type: Boolean,
         required: false,
-        default: 0
+        default: true
     }
 });
 
-module.exports = Students = mongoose.model("students", StudentSchema);
+module.exports = Sports = mongoose.model("sports", SportSchema);

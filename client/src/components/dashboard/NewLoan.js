@@ -61,22 +61,22 @@ class NewLoan extends Component{
                     <Form.Group as={Col} >
                         <Form.Row>
                             <Form.Label column lg={4}>
-                                ISBN
-                            </Form.Label>
-                            <Col>
-                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
-                            </Col>
-                        </Form.Row>
-                    
-                        <Form.Row>
-                            <Form.Label column lg={4}>
                                 Student ID
                             </Form.Label>
                             <Col>
                                 <Form.Control type="text"  id="studentid" placeholder="Enter Student Id" onChange={this.onChange} value={this.state.studentid} />
                             </Col>
                         </Form.Row>
-                   
+
+                        <Form.Row>
+                            <Form.Label column lg={4}>
+                                ISBN
+                            </Form.Label>
+                            <Col>
+                                <Form.Control id="isbn" type="text" placeholder="Enter ISBN " onChange={this.onChange} value={this.state.isbn}/>
+                            </Col>
+                        </Form.Row>
+
                         <Form.Row>
                             <Form.Label column lg={4}>
                                 Issue Date
@@ -85,7 +85,7 @@ class NewLoan extends Component{
                                 <Form.Control id="issuedate" type="date" placeholder="Enter Issue Date"  onChange={this.onChange}  value={this.state.issuedate}/>
                             </Col>
                         </Form.Row>
-                    
+
                         <Form.Row>
                             <Form.Label column lg={4}>
                                 Due Date
