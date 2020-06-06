@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-
+import '../../App.css';
 class LoanInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            count:props.count,
             id: props.id,
             loanDate: props.loanDate,
             returnDate: props.returnDate,
@@ -12,6 +13,7 @@ class LoanInfo extends Component {
     }
     componentDidMount() {
         this.setState({
+            count:this.props.count,
             id: this.props.id,
             loanDate: this.props.loanDate,
             returnDate: this.props.returnDate,
@@ -20,6 +22,7 @@ class LoanInfo extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.id !== prevState.id){
             this.setState({
+                count:this.props.count,
                 id: this.props.id,
                 loanDate: this.props.loanDate,
                 returnDate: this.props.returnDate,
@@ -30,33 +33,19 @@ class LoanInfo extends Component {
     render() {
         return (
             <div className="px-4">
-                <h3>Lend to</h3>
                 <div className="table-wrapper table-responsive table-bordered ">
                     <table className="table table-hover mb-0" variant='dark' cellSpacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th className="th-lg">
-                                <a href="_blank">id
-                                    <i className="fa fa-sort ml-1"/>
-                                </a>
-                            </th>
-                            <th className="th-lg">
-                                <a href="_blank">Loan Date
-                                    <i className="fa fa-sort ml-1"/>
-                                </a>
-                            </th>
-                            <th className="th-lg">
-                                <a href="_blank">Return Date
-                                    <i className="fa fa-sort ml-1"/>
-                                </a>
-                            </th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <tr>
-                            <td>{this.state.id}</td>
-                            <td>{this.state.loanDate}</td>
-                            <td>{this.state.returnDate}</td>
+                            <td style={{width:"7%"}}>{this.state.count}</td>
+                            <td style={{width:"20%"}}>{this.state.id}</td>
+                            <td style={{width:"22%"}}>{this.state.loanDate}</td>
+                            <td style={{width:"22%"}}>{this.state.returnDate}</td>
+                            <td style={{width:"22%"}}>
+                                <button type="button" className="btn btn-primary"><i className="fa fa-eye"/></button>
+                                <button type="button" className="btn btn-success"><i className="fa fa-edit"/></button>
+                                <button type="button" className="btn btn-danger"><i className="fa fa-trash-o"/></button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import FlashMessage from "react-flash-message";
+import RenderBookHeader from "./RenderBookHeader";
 
 class FindForm extends Component{
     constructor(props){
@@ -50,18 +51,21 @@ class FindForm extends Component{
                 });
             }
             else{
-                let x = (Object.keys(data)).filter(key => {
+                let x = (Object.keys(data)).filter( key => {
                     return (typeof data[key]) === "object";
                 });
                 let loanArray = []
+                let cnt=1;
                 x.forEach(id => {
                     if(id !== 'bookInfo'){
-                        loanArray.push(<LoanInfo id={id} loanDate={data[id]["Loaning Date"]} returnDate={data[id]["Return Date"]} />)
+                        loanArray.push(<LoanInfo count={cnt} id={id} loanDate={data[id]["Loaning Date"]} returnDate={data[id]["Return Date"]} />)
                     }
+                    cnt+=1
                 });
                 let temp = data['bookInfo'];
                 console.log(temp);
                 this.setState({
+                    error: false,
                     book_form: <Book isbn={temp.isbn} title={temp.title} subject={temp.subject} copies={temp.copies}/>,
                     loanForm: loanArray
                 })
@@ -72,7 +76,7 @@ class FindForm extends Component{
         return (
             <div>
                 <h2>Search Book</h2>
-            <div className="container p-5 rounded mb-0 block-example border border-light">
+            <div className="row p-5 rounded mb-0 block-example border border-light">
                 <Form>
                     <Form.Group as={Col} >
                         <Form.Row>
@@ -94,11 +98,20 @@ class FindForm extends Component{
                         </div>
                     </div>
                 </Form>
-                <div className="detail_form">
-                    {(this.state.error) ? this.state.msgFail : this.state.book_form}
-                    {(this.state.loanForm.length > 0) ? this.state.loanForm: ""}
-                </div>
             </div>
+            <div className="container p-5 rounded mb-0 block-example border border-light">
+                <div >
+                {(this.state.error) ? this.state.msgFail : this.state.book_form}
+                </div>
+
+                <div >
+                {(this.state.loanForm.length > 0) ? <RenderBookHeader /> : null}
+                {(this.state.loanForm.length > 0) ? this.state.loanForm: ""}
+                </div>
+                
+              
+            </div>
+            
 
             </div>
         );
