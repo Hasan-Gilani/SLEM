@@ -4,9 +4,41 @@ const router = express.Router();
 const Student = require("../../models/Students");
 const Record = require("../../models/Records");
 const Book = require("../../models/Books");
+const SpRecord = require("../../models/SportsRecords")
+const Sport = require("../../models/Sports")
+
 const regNote = require("../api/mailer").register
 
-router.get("/find/:id", (req, res) => {
+router.get("/findSport/:id", (req, res) => {
+    Student.findOne( {id: req.params.id} )
+        .then(student =>{
+            if (student){
+                let ans = {}
+                SpRecord.findOne({id: req.params.id})
+                    .then(record => {
+                        if(record){
+                            let goodIDs = record.goods.map(elem => elem.goodID)
+                            Sport.find({goodID: {$in: goodIDs}})
+                                .then(goods => {
+                                    let i = 0
+                                    goods.forEach(good => {
+                                        record.goods[i].goodType = good.goodType
+                                        record.goods[i].bdate = record.goods[i].bdate.toString().split(" GMT")[0];
+                                        record.goods[i].rdate = record.goods[i].rdate.toString().split(" GMT")[0];
+                                        ++i;
+                                    })
+                                    ans.record = record
+                                    res.status(200).send(ans);
+                                })
+                                .catch(err => console.log(err));
+                        }
+                    })
+                }
+            })
+            .catch(err => console.log(err));
+})
+
+router.get("/findBook/:id", (req, res) => {
     Student.findOne( {id:req.params.id})
         .then(student => {
             if(student) {
