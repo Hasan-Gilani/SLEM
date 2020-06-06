@@ -8,6 +8,7 @@ const borrowNotifier = require("../api/mailer").borrow;
 const manualNotifier = require("../api/mailer").manual;
 const returnNotifier = require("../api/mailer").return;
 
+
 validateLoanForm = arg => {
     let inputs = Object.keys(arg);
     let empty = inputs.filter(i => {
@@ -67,7 +68,7 @@ router.get("/findRecord/:isbn", (req, res) => {
                             'Return Date': record.books[0].rdate
                         };
                     });
-                    ans.error = false;;
+                    ans.error = false;
                     ans.bookInfo = bookData;
                     res.status(200);
                     res.send(ans)
@@ -105,7 +106,7 @@ router.put("/loanBook", (req, res) => {
             Book.findOne({isbn: req.body.isbn})
                 .then(bookData => { // See if the book exists in the database.
                     if(!bookData){  //It doesn't exist
-                        res.status(400);;
+                        res.status(400);
                         res.send({error: true, message: "No such book exists."} );
                     } else{  //Book exists. Check for its number of copies.
                         const copies = bookData.copies;
