@@ -4,7 +4,8 @@ router = express.Router();
 const SpRecord = require("../../models/SportsRecords")
 const Sport = require("../../models/Sports")
 const Student = require("../../models/Students")
-const borrowNotifier = require("../api/mailer").borrow;
+const borrowNotifier = require("../api/mailer").sportBorrow;
+const returnNotifier = require("../api/mailer").sportsReturn
 const manualNotifier = require("../api/mailer").manual;
 
 validateLoanForm = arg => {
@@ -139,14 +140,23 @@ router.put("/loan", (req, res) => {
                                             },
                                             { upsert: true, useFindAndModify: false })  //Add the student record if none exists before it.
                                             .then(() => {
-                                                // borrowNotifier(req.body.goodID, sportData, dates.bdate.toString(), dates.rdate.toString());
                                                 Sport.updateOne({ goodID: req.body.goodID }, { $inc: { copies: -1 } })
                                                     .then(() => {  // Good assigned. Send the success response
-                                                        return res.status(200).json({
-                                                            error: false,
-                                                            message: `Good assigned to student ${req.body.goodID}. You will receive an email
-                                                        confirmation soon.`,
-                                                        });
+                                                        let promise = borrowNotifier(req.body.id, sportData, dates.bdate.toString(), dates.rdate.toString())
+                                                        promise
+                                                            .then(ans => {
+                                                                if(!ans){
+                                                                    throw {
+                                                                        error: true,
+                                                                        message: `Good assigned to ${req.body.id}, but error sending notification. Please manually check records to confirm`};
+                                                                    }
+                                                                else{
+                                                                    res.status(200)
+                                                                    res.send({error: false, message: `Good Assigned to ${req.body.id}. You'll receive an email confirmation soon.`});
+                                                                }
+
+                                                            })
+                                                            .catch(err => {res.status(400).send(err)});
                                                     })
                                                     .catch(err => console.log(err));
                                             })
@@ -163,7 +173,7 @@ router.put("/loan", (req, res) => {
 });
 
 router.post("/return", (req, res) => {
-    Student.findOne({ goodID: req.body.goodID })
+    Student.findOne({ id: req.body.id })
         .then(student => {
 
             if (!student) {
@@ -176,15 +186,26 @@ router.post("/return", (req, res) => {
             }
 
             else {
-                SpRecord.updateOne({ goodID: req.body.goodID }, { $pull: { goods: { goodID: req.body.goodID } } })
+                SpRecord.updateOne({ id: req.body.id }, { $pull: { goods: { goodID: req.body.goodID } } })
                     .then(toBeMod => {
                         if (toBeMod) {
                             if (toBeMod.nModified === 1) {
-                                Sport.updateOne({ goodID: req.body.goodID }, { $inc: { copies: 1 } })
-                                    .then(() => {
-                                        return res.status(200).json({ error: false, message: 'Good Returned. Thank you!' })
+                                Sport.findOneAndUpdate({ goodID: req.body.goodID }, { $inc: { copies: 1 } }, {useFindAndModify: false})
+                                    .then((updated) => {
+                                        console.log(updated);
+                                        let promise = returnNotifier(req.body.id, updated)
+                                            promise
+                                            .then(ans => {
+                                                if(!ans)
+                                                    throw {error: true, message: "Good returned but email could not be sent."}
+                                                else{
+                                                    res.status(200).send({error: false, message: "Good Returned. You will receive a confirmation mail shortly."})
+                                                }
+                                            })
+                                            .catch(err => res.status(400).send(err))
+
                                     })
-                                    .catch();
+                                    .catch(err => console.log(err));
                             }
                             else {
                                 throw { error: true, message: "User has not loaned this good. Return Failed" }
@@ -195,7 +216,7 @@ router.post("/return", (req, res) => {
                         }
                     })
                     .catch(err => res.status(400).send(err));
-            }
+                }
         })
         .catch(err => { res.status(400).send(err);})
 });
