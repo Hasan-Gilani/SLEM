@@ -2,3 +2,7 @@
 .idea/inspectionProfiles/
 client/node_modules/
 server/node_modules/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/mongoSettings.xml

@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const SportSchema = new Schema({
-    good_id: {
+    goodID: {
         type: String,
         required: true
     },
-    good_type: {
+    goodType: {
         type: String,
         required: true
     },

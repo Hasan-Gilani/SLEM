@@ -9,6 +9,8 @@ const books = require("./routes/api/books");
 const students = require("./routes/api/students")
 const records = require("./routes/api/records")
 const mailer = require("./routes/api/mailer").borrow;
+const sports = require("./routes/api/sports");
+const spRecords = require("./routes/api/recordSports");
 
 const app = express();
 
@@ -21,7 +23,7 @@ app.use(
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURIa;
+const db = require("./config/keys").mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -41,7 +43,8 @@ app.use("/api/books", books);
 app.use("/api/students", students);
 app.use("/api/records", records);
 app.use("/api"/mailer, mailer);
-
+app.use("/api/sports", sports)
+app.use("/api/recordSports", spRecords);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));

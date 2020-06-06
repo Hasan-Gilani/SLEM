@@ -60,6 +60,7 @@ class FindForm extends Component{
                     }
                 });
                 let temp = data['bookInfo'];
+                console.log(temp);
                 this.setState({
                     book_form: <Book isbn={temp.isbn} title={temp.title} subject={temp.subject} copies={temp.copies}/>,
                     loanForm: loanArray
