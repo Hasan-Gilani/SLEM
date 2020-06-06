@@ -1,7 +1,10 @@
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
+
 const Record = require("../../models/Records")
-const bookNotes = require("./notifications")
+const SpRecord = require("../../models/SportsRecords")
+const notes = require("./notifications")
+
 
 const transporter = nodemailer.createTransport( {
     service: 'gmail',
@@ -15,7 +18,7 @@ function mailSend(mailOptions){
     return new Promise( (resolve, reject) => {
         transporter.sendMail(mailOptions, (err, info) => {
             if(err){
-                console.log('hehe wrong mail go brrr');;;
+                console.log('hehe wrong mail go brrr');
                 reject(err);
             }
             else{
@@ -27,7 +30,6 @@ function mailSend(mailOptions){
 }
 
 async function deadlineNotifier(recipients){
-    console.log(recipients);''
     let mailOptions = {from: "slem58370@gmail.com", subject: "Approaching Deadline Notification mail"};
     let domain = "@nu.edu.pk";
 
@@ -35,7 +37,7 @@ async function deadlineNotifier(recipients){
         mailOptions.to = id + domain;
         let date = Object.keys(recipients[id])[0];
         let books = recipients[id][date]
-        mailOptions.html = bookNotes.dailyBookNote(id, date, books);
+        mailOptions.html = notes.dailyBookNote(id, date, books);
         console.log('almost here.');
         try
         {
@@ -51,22 +53,22 @@ async function deadlineNotifier(recipients){
 async function manualNotifier(id, bookData, name, surcharge){
     let mailOptions = {from: "slem58370@gmail.com", subject: "Loan Details Notification.", to: id+ "@nu.edu.pk"};
     console.log('reached here');
-    mailOptions.html = bookNotes.manualBookNote(bookData, name, surcharge);
+    mailOptions.html = notes.manualBookNote(bookData, name, surcharge);
     try {
         await mailSend(mailOptions)
         return true;
     }
     catch (e) {
-        return false;;
+        return false;
     }
 }
 
 async function borrowNotifier(toID, bookDetails, bdate, rdate) {
     let recipient = toID + "@nu.edu.pk";
     let mailOptions = { from: "slem58370@gmail.com", subject: 'Book Borrow Notification', to: recipient};
-    mailOptions.html = bookNotes.borrowNote(bookDetails, bdate, rdate);
+    mailOptions.html = notes.borrowNote(bookDetails, bdate, rdate);
     try {
-        let result = await mailSend(mailOptions);
+        await mailSend(mailOptions);
         return true;
     }
     catch (e) {
@@ -80,10 +82,9 @@ async function returnNotifier(toID, bookDetails){
     let recipient = toID + "@nu.edu.pk",
     mailOptions = { from: "slem58370@gmail.com", subject: 'Book Return Notification', to: recipient},
     date = new Date().toString();
-    mailOptions.html = bookNotes.returnNote(bookDetails, date);
-    let result;
+    mailOptions.html = notes.returnNote(bookDetails, date);
     try{
-        result = await mailSend(mailOptions);
+        await mailSend(mailOptions);
         return true;
     }
     catch (e) {
@@ -94,7 +95,7 @@ async function returnNotifier(toID, bookDetails){
 
 async function registerNotifier(toID, password,fname, lname){
     let mailOptions = { from: "slem58370@gmail.com", subject: 'Notification for Registration', to: toID + "@nu.edu.pk"}
-    mailOptions.html = bookNotes.registerNote(toID, password,fname, lname);
+    mailOptions.html = notes.registerNote(toID, password,fname, lname);
     try{
         await mailSend(mailOptions)
         return true;
@@ -104,6 +105,55 @@ async function registerNotifier(toID, password,fname, lname){
     }
 
 }
+
+async function sportBorrow(toID, sportDetails, bdate, rdate){
+    let recipient = toID + "@nu.edu.pk";
+    let mailOptions = { from: "slem58370@gmail.com", subject: 'Sports good borrow Notification', to: recipient};
+    mailOptions.html = notes.sportBorrow(sportDetails, bdate, rdate);
+    try {
+        await mailSend(mailOptions);
+        return true;
+    }
+    catch (e) {
+        return false
+    }
+}
+
+async function sportsReturn(toID, sportDetails){
+    let recipient = toID + "@nu.edu.pk",
+        mailOptions = { from: "slem58370@gmail.com", subject: 'Book Return Notification', to: recipient},
+        date = new Date().toString();
+        mailOptions.html = notes.sportReturn(sportDetails, date);
+    try{
+        await mailSend(mailOptions);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+async function sportsDailyNotifier(recipients){
+    console.log(recipients);
+    let mailOptions = {from: "slem58370@gmail.com", subject: "Approaching Deadline Notification mail"};
+    let domain = "@nu.edu.pk";
+
+    for(const id in recipients){
+        mailOptions.to = id + domain;
+        let date = Object.keys(recipients[id])[0];
+        let goods = recipients[id][date]
+        mailOptions.html = notes.sportDaily(id, date, goods);
+        console.log('almost here.');
+        try
+        {
+            await mailSend(mailOptions);
+            console.log('gayi mail')
+        }
+        catch (e) {
+        }
+    }
+}
+
 
 
 cron.schedule("00 17 13 * * *", () => {
@@ -135,5 +185,41 @@ cron.schedule("00 17 13 * * *", () => {
 });
 
 
-module.exports = {borrow: borrowNotifier, manual: manualNotifier, return: returnNotifier, register: registerNotifier};
+
+cron.schedule("10 11 14 * * *", () => {
+    console.log("starting automated Mail at 13:51");
+    SpRecord.aggregate([{$project: {_id: 0,  id: true,goods: true}}])
+        .then(record =>{
+            let mailTo = {}, today = new Date();
+            record.forEach(each => {
+                each.goods.forEach(obj => {
+                    let days = Math.floor((obj.rdate - today)/( 1000 * 60 * 60 * 24))
+                    if(days < 2){
+                        if(!(each.id in mailTo)){
+                            mailTo[each.id] = {};
+                            mailTo[each.id][obj.rdate] = [obj.goodID]
+                        }
+                        else{
+                            mailTo[each.id][obj.rdate].push(obj.goodID);
+                        }
+                    }
+                });
+            });
+            sportsDailyNotifier(mailTo)
+                .then(ans => {
+                    console.log(ans);
+                })
+                .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err));
+});
+
+
+
+
+
+
+module.exports = {borrow: borrowNotifier, manual: manualNotifier, return: returnNotifier, register: registerNotifier,
+                    sportBorrow: sportBorrow, sportsReturn: sportsReturn
+                };
 
