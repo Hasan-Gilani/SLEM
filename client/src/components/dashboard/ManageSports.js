@@ -10,15 +10,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
 import 'react-bootstrap';
-import SportsNewUser from "./SportsNewUser";
 import SportsFindGood from "./SportsFindGood";
 import SportsAddGood from "./SportsAddGood";
 import SportsDelGood from "./SportsDelGood";
 import SportsNewLoan from "./SportsNewLoan";
 import SportsSearchLoan from "./SportsSearchLoan";
 import SportsSendReminder from "./SportsSendReminder";
-import SportsRemoveUser from "./SportsRemoveUser";
-import SportsFinePayement from "./SportsFinePayement";
 import SportsReturnLoan from"./SportsReturnLoan";
 
 class ManageSports extends Component {
@@ -36,7 +33,7 @@ class ManageSports extends Component {
             <div className="container-fluid">
               <div className="col-xs-6">
               <NavbarBrand>
-                <img src="assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
+                <img src="../../../public/assets/images/navbarlogo.png" className="rounded float-left nav-logo" alt="SLEM" height="59" width="55"/>
                 <h1 height="65" width="55"><strong>LEM</strong></h1>
               </NavbarBrand>
               </div>
@@ -60,50 +57,12 @@ class ManageSports extends Component {
               <div className="row">
                 <div className="col col-sm-3">
                   <ListGroup >
-                    <ListGroup.Item action href="#link3" className="p-4 d-flex justify-content-around"><i className="fa fa-user-plus">Users</i></ListGroup.Item>
                     <ListGroup.Item action href="#link4" className="p-4 d-flex justify-content-around"><i className="fa fa-address-card-o">Loans</i></ListGroup.Item>
                     <ListGroup.Item action href="#link5" className="p-4 d-flex justify-content-around"><i className="fa fa-table-tennis">Goods</i></ListGroup.Item>
                   </ListGroup>
                 </div>
                 <div className="col col-sm-9" >
                   <Tab.Content>
-
-                    <Tab.Pane eventKey="#link3">
-                      <div>
-                        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link31">
-                          <div className="container">
-                            <div className="row">
-                              <ListGroup horizontal className="col-12">
-                                <ListGroup.Item action href="#link31" className="p-4 d-flex justify-content-around"><i className="fa fa-plus">New Student</i></ListGroup.Item>
-                                <ListGroup.Item action href="#link32" className="p-4 d-flex justify-content-around"><i className="fa fa-remove">Remove Student</i></ListGroup.Item>
-                                <ListGroup.Item action href="#link33" className="p-4 d-flex justify-content-around"><i className="fa fa-money">Fine Payement</i></ListGroup.Item>
-                              </ListGroup>
-                            </div>
-                            <div className="row">
-                              <Tab.Content>
-                                <Tab.Pane eventKey="#link31">
-                                  <div>
-                                    <SportsNewUser />
-
-                                  </div>
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="#link32">
-                                  <div>
-                                    <SportsRemoveUser />
-                                  </div>
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="#link33">
-                                  <div>
-                                    <SportsFinePayement />
-                                  </div>
-                                </Tab.Pane>
-                                
-                              </Tab.Content>
-                            </div>
-                          </div>
-                        </Tab.Container>
-                      </div>
-                    </Tab.Pane>
 
                     <Tab.Pane eventKey="#link4">
                       <div>
@@ -132,13 +91,13 @@ class ManageSports extends Component {
 
                                   </div>
                                 </Tab.Pane>
-                               
+
                                 <Tab.Pane eventKey="#link43">
                                   <div>
                                     <SportsReturnLoan/>
                                   </div>
                                 </Tab.Pane>
-                                
+
                                 <Tab.Pane eventKey="#link46">
                                   <div>
                                     <SportsSendReminder />
@@ -178,7 +137,7 @@ class ManageSports extends Component {
 
                                   </div>
                                 </Tab.Pane>
-                               
+
                                 <Tab.Pane eventKey="#link53">
                                   <div>
                                     <SportsDelGood />
@@ -195,13 +154,6 @@ class ManageSports extends Component {
                 </div>
               </div>
             </Tab.Container>
-              {/* <div className="col-xs-3">
-
-
-              </div>
-              <div className="col-xs-9">
-
-              </div> */}
           </div>
       </div>
     );

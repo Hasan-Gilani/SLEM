@@ -31,7 +31,7 @@ class SportsFindGood extends Component{
     };
     makeCall = () => {
         return axios
-            // .get(`/api/records/findRecord/${this.state.goodID}`)
+            .get(`/api/recordSports/find/${this.state.goodID}`)
             .then( (response) => {
                 return response.data
             })
@@ -51,26 +51,31 @@ class SportsFindGood extends Component{
                 });
             }
             else{
-                // let x = (Object.keys(data)).filter( key => {
-                //     return (typeof data[key]) === "object";
-                // });
-                // let loanArray = []
-                // let cnt=1;
-                // x.forEach(id => {
-                //     if(id !== 'bookInfo'){
-                //         loanArray.push(<LoanInfo count={cnt} id={id} loanDate={data[id]["Loaning Date"]} returnDate={data[id]["Return Date"]} />)
-                //     }
-                //     cnt+=1
-                // });
-                // let temp = data['bookInfo'];
-                // console.log(temp);
-                // this.setState({
-                //     error: false,
-                //     good_form: <Sports goodId={temp.goodID} goodtype={temp.title}  quantity={temp.copies}/>,
-                //     loanForm: loanArray
-                // })
+                console.log(data);
+                let x = (Object.keys(data)).filter( key => {
+                    return (typeof data[key]) === "object";
+                });
+                let loanArray = []
+                let cnt=1;
+                x.forEach(id => {
+                    if(id !== 'sportInfo'){
+                        loanArray.push(<LoanInfo key={cnt} count={cnt} id={id} loanDate={data[id]["Loaning Date"]} returnDate={data[id]["Return Date"]} />)
+                    }
+                    cnt+=1
+                });
+                let temp = data['sportInfo'];
+                console.log(temp);
+                this.setState({
+                    error: false,
+                    good_form: <Sports goodId={temp.goodID} goodtype={temp.goodType}  quantity={temp.copies}/>,
+                    loanForm: loanArray
+                })
             }
         })
+    };
+    resetAll = e => {
+        e.preventDefault();
+        this.setState({msgFail: null, msgSuccess: null, good_form: null, loanForm: [],goodID: ""});
     };
     render() {
         return (
@@ -94,24 +99,23 @@ class SportsFindGood extends Component{
                             <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
-                            <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
+                            <Button variant="light" type = "button" className="fa fa-undo" onClick={this.resetAll}>Reset</Button>
                         </div>
                     </div>
                 </Form>
-            </div>
-            <div className="container p-5 rounded mb-0 block-example border border-light">
-                <div >
-                {(this.state.error) ? this.state.msgFail : this.state.good_form}
-                </div>
+                <div className="container p-5 rounded mb-0 block-example border border-light">
+                    <div >
+                        {(this.state.error) ? this.state.msgFail : this.state.good_form}
+                    </div>
 
-                <div >
-                {(this.state.loanForm.length > 0) ? <RenderBookHeader /> : null}
-                {(this.state.loanForm.length > 0) ? this.state.loanForm: ""}
+                    <div >
+                        {(this.state.loanForm.length > 0) ? <RenderBookHeader /> : null}
+                        {(this.state.loanForm.length > 0) ? this.state.loanForm: ""}
+                    </div>
+
                 </div>
-                
-              
             </div>
-            
+
 
             </div>
         );

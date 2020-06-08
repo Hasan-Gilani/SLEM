@@ -16,42 +16,36 @@ class SearchStudentRecord extends Component{
             error: true,
             msgSuccess: null,
             msgFail: null,
-            datafetched: null,
-            displaystudent:[]
+            displaystudent:[],
+            header: <RenderHeader />
         }
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
     onFindPress = () => {
-        this.setState({error: false, msgSuccess: null, msgFail: null});
+        this.setState({error: false, msgSuccess: null, msgFail: null, displaystudent:[]})
         this.makeCall()
             .then(data => {
                 if(data.error === true){
                     this.setState({
+                        header: "",
                         error: true,
                         msgFail: <FlashMessage duration={3000}><p style={{color: "red", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+
                     })
                 }
                 else{
-        
-                    console.log('henlo deer :) ', data['data']["record"].id);
-                        let x =0;
-                        let temp = data['data']["record"];
-                        let str=[x].toString();
-                        let flag=[]
-                        while (temp["books"][str]){
-                            let temp2=temp["books"][str];
-                            flag.push(<StudentRecord count={x+1}isbn={temp2.isbn} studentid={temp.id} issuedate={temp2.bdate} duedate={temp2.rdate} />)
-                            x+=1
-                            str=[x].toString();
-                        }
-                
+                    let record = data.data.record, i = 1, list = [];
+                    record.books.forEach(book => {
+                        list.push(<StudentRecord key={i-1} count={i}
+                                                 isbn={book.isbn} studentid={this.state.studentid}
+                                                 issuedate={book.bdate} duedate={book.rdate}/>)})
                     this.setState({
+                        header: <RenderHeader />,
                         error: false,
-                        displaystudent:flag
-                        // msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
-                        })
+                        displaystudent: list
+                    })
                 }
             })
             .catch(err => {
@@ -60,13 +54,20 @@ class SearchStudentRecord extends Component{
     }
     makeCall = () => {
         return axios
-                .get(`/api/students/find/${this.state.studentid}`)
+                .get(`/api/students/findBook/${this.state.studentid}`)
                 .then(ans => {
                         return ans;
                     })
                 .catch(err => {
                     return err.response.data;
                 });
+    }
+    resetAll = e => {
+        e.preventDefault();
+        this.setState({studentid: "", error: false,
+            msgSuccess: null, msgFail: null, displaystudent:[],
+            header: ""
+        })
     }
     render() {
         return (
@@ -90,14 +91,14 @@ class SearchStudentRecord extends Component{
                             <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onFindPress}>search</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
-                            <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>
+                            <Button variant="light" type = "button" className="fa fa-undo" onClick={this.resetAll}>Reset</Button>
                         </div>
                     </div>
                 </Form>
             </div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
-                {(this.state.error) ? this.state.msgFail : <RenderHeader />}
-                {(this.state.error) ? this.state.msgFail : this.state.displaystudent}
+                {(this.state.error) ? this.state.msgFail : this.state.header}
+                {(this.state.displaystudent.length > 0) ? this.state.displaystudent : ""}
             </div>
 
             </div>

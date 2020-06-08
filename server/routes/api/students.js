@@ -12,11 +12,13 @@ const regNote = require("../api/mailer").register
 router.get("/findSport/:id", (req, res) => {
     Student.findOne( {id: req.params.id} )
         .then(student =>{
-            if (student){
+            if (!student)
+                throw {error: true, message: "No record exists against the given ID"};
                 let ans = {}
                 SpRecord.findOne({id: req.params.id})
                     .then(record => {
-                        if(record){
+                        if(!record)
+                            throw {error: true, message: "No record found against the input ID"}
                             let goodIDs = record.goods.map(elem => elem.goodID)
                             Sport.find({goodID: {$in: goodIDs}})
                                 .then(goods => {
@@ -31,11 +33,11 @@ router.get("/findSport/:id", (req, res) => {
                                     res.status(200).send(ans);
                                 })
                                 .catch(err => console.log(err));
-                        }
-                    })
-                }
+                            })
+                    .catch(err => res.status(400).send(err))
+
             })
-            .catch(err => console.log(err));
+            .catch(err => res.status(400).send(err));
 })
 
 router.get("/findBook/:id", (req, res) => {
@@ -50,6 +52,8 @@ router.get("/findBook/:id", (req, res) => {
                             let isbns = record.books.map(elem => elem.isbn);
                             Book.find({isbn: {$in: isbns}})
                                 .then(books => {
+                                    if(books.length === 0)
+                                        throw {error: true, message: "No books exists against this id."};
                                     let i = 0;
                                     books.forEach(book => {
                                         record.books[i].title = book.title;
@@ -63,7 +67,7 @@ router.get("/findBook/:id", (req, res) => {
                                     res.status(200);
                                     res.send(ans);
                                 })
-                                .catch(err => console.log(err));
+                                .catch(err => res.status(400).send(err));
                         }
                     })
                     .catch(err => console.log(err));
@@ -171,6 +175,20 @@ router.get("/fine/:id", (req, res) => {
             }
         })
         .catch(err => res.status(400).send(err))
+})
+
+router.post("/fineRemove", (req, res) => {
+    Student.updateOne({id: req.body.id}, {$set: {surcharge: 0}})
+        .then(updated => {
+            if(updated.n === 0)
+                throw {error: true, message: "No such student exists"}
+            if(updated.nModified === 0)
+                throw {error: true, message: "No fine dues against the ID"}
+            if(updated.nModified === 1)
+                res.status(200).send({error: false, message: "Thank you for paying your fines."})
+
+        })
+        .catch(err => res.status(400).send(err));
 })
 
 module.exports = router;

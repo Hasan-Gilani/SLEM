@@ -44,7 +44,7 @@ class SportsReturnLoan extends Component{
 
     makeCall = (data) => {
         return axios
-            // .post("/api/records/returnBook", data)
+            .post("/api/recordSports/return", data)
             .then(response => {
                 return response.data
             })

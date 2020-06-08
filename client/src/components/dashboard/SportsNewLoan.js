@@ -44,7 +44,7 @@ class SportsNewLoan extends Component{
     }
     makeCall = data => {
         return axios
-            // .put("/api/records/loanBook", data)
+            .put("/api/recordSports/loan", data)
             .then((res) => {
                 return res.data;
             })

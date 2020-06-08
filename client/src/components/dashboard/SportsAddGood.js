@@ -24,7 +24,7 @@ class SportsAddGood extends Component{
     onSubmit = e => {
         this.setState({msgSuccess: null, msgFail: null});
         e.preventDefault();
-        const GoodData = { goodId: this.state.goodId, goodType: this.state.goodType, quantity: this.state.quantity};
+        const GoodData = { goodID: this.state.goodId, goodType: this.state.goodType, copies: this.state.quantity};
         this.makeCall(GoodData)
             .then((data) => {
                 if(data.error === true){
@@ -44,7 +44,7 @@ class SportsAddGood extends Component{
     }
     makeCall = GoodData => {
         return axios
-                // .post("/api/books/Addbook", GoodData)
+                .post("/api/sports/add", GoodData)
                 .then( (res) => {
                     return res.data;
                 })
@@ -71,7 +71,7 @@ class SportsAddGood extends Component{
                                 <Form.Control id="goodId" type="text"  pattern="[0-9]*" minLength="13" maxLength="13" placeholder="Enter Good ID " onChange={this.onChange} value={this.state.goodId}/>
                             </Col>
                         </Form.Row>
-                  
+
                         <Form.Row>
                             <Form.Label column lg={4}>
                                 Good Type
@@ -80,7 +80,7 @@ class SportsAddGood extends Component{
                                 <Form.Control type="text"  id="goodType" placeholder="Enter Good Type" onChange={this.onChange} value={this.state.name} />
                             </Col>
                         </Form.Row>
-                 
+
                         <Form.Row>
                             <Form.Label column lg={4}>
                                 No. of quantity

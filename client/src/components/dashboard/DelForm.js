@@ -40,6 +40,7 @@ class DelForm extends Component{
                     })
                 }
             })
+            .catch(err => console.log(err));
     };
     makeCall = () => {
         return axios

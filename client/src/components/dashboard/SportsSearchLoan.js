@@ -17,7 +17,6 @@ class SportsSearchLoan extends Component{
             error: true,
             msgSuccess: null,
             msgFail: null,
-            datafetched: null,
             displaystudent:[]
         }
     }
@@ -25,7 +24,7 @@ class SportsSearchLoan extends Component{
         this.setState({ [e.target.id]: e.target.value });
     };
     onFindPress = () => {
-        this.setState({error: false, msgSuccess: null, msgFail: null});
+        this.setState({error: false, msgSuccess: null, msgFail: null, displaystudent: []});
         this.makeCall()
             .then(data => {
                 if(data.error === true){
@@ -35,23 +34,17 @@ class SportsSearchLoan extends Component{
                     })
                 }
                 else{
-                    console.log('henlo deer :) ', data);
-                    // console.log('henlo deer :) ', data['data']["record"].id);
-                    //     let x =0;
-                    //     let temp = data['data']["record"];
-                    //     let str=[x].toString();
-                    //     let flag=[]
-                    //     while (temp["books"][str]){
-                    //         let temp2=temp["books"][str];
-                    //         flag.push(<SportsStudentRecord count={x+1}isbn={temp2.isbn} studentid={temp.id} issuedate={temp2.bdate} duedate={temp2.rdate} />)
-                    //         x+=1
-                    //         str=[x].toString();
-                    //     }
-                
+                        let record = data.data.record;
+                        let flag=[], i = 1
+                        record.goods.forEach(good => {
+                            flag.push(<SportsStudentRecord key={i} count={i} goodId={good.goodID} goodType={good.goodType}
+                                       studentid={this.state.studentid} issuedate={good.bdate} duedate={good.rdate}
+                                        />)
+                        })
                     this.setState({
                         error: false,
-                        // displaystudent:flag
-                        // msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
+                        displaystudent: flag,
+                        msgSuccess: <FlashMessage duration={3000}><p style={{color: "green", fontStyle: "italic"}}>{data.message}</p></FlashMessage>
                         })
                 }
             })
@@ -61,7 +54,7 @@ class SportsSearchLoan extends Component{
     }
     makeCall = () => {
         return axios
-                // .get(`/api/students/find/${this.state.studentid}`)
+                .get(`/api/students/findSport/${this.state.studentid}`)
                 .then(ans => {
                         return ans;
                     })
@@ -98,7 +91,7 @@ class SportsSearchLoan extends Component{
             </div>
             <div className="container p-5 rounded mb-0 block-example border border-light">
                 {(this.state.error) ? this.state.msgFail : <SportsRenderHeader />}
-                {/* {(this.state.error) ? this.state.msgFail : this.state.displaystudent} */}
+                 {(this.state.displaystudent.length > 0) ? this.state.displaystudent : ''}
             </div>
 
             </div>

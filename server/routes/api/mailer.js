@@ -18,11 +18,9 @@ function mailSend(mailOptions){
     return new Promise( (resolve, reject) => {
         transporter.sendMail(mailOptions, (err, info) => {
             if(err){
-                console.log('hehe wrong mail go brrr');
                 reject(err);
             }
             else{
-                console.log(info);
                 resolve('resolved')
             }
         })
@@ -52,7 +50,6 @@ async function deadlineNotifier(recipients){
 
 async function manualNotifier(id, bookData, name, surcharge){
     let mailOptions = {from: "slem58370@gmail.com", subject: "Loan Details Notification.", to: id+ "@nu.edu.pk"};
-    console.log('reached here');
     mailOptions.html = notes.manualBookNote(bookData, name, surcharge);
     try {
         await mailSend(mailOptions)
@@ -121,7 +118,7 @@ async function sportBorrow(toID, sportDetails, bdate, rdate){
 
 async function sportsReturn(toID, sportDetails){
     let recipient = toID + "@nu.edu.pk",
-        mailOptions = { from: "slem58370@gmail.com", subject: 'Book Return Notification', to: recipient},
+        mailOptions = { from: "slem58370@gmail.com", subject: 'Sports good return Notification', to: recipient},
         date = new Date().toString();
         mailOptions.html = notes.sportReturn(sportDetails, date);
     try{
@@ -154,7 +151,18 @@ async function sportsDailyNotifier(recipients){
     }
 }
 
-
+async function sportsManualNotifier(id, sportData, name, surcharge){
+    let mailOptions = {from: "slem58370@gmail.com", subject: "Loan Details Notification.", to: id+ "@nu.edu.pk"};
+    mailOptions.html = notes.sportManual(sportData, name, surcharge);
+    console.log('here');
+    try {
+        await mailSend(mailOptions)
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
 
 cron.schedule("00 17 13 * * *", () => {
     console.log("starting automated Mail at 13:07");
@@ -220,6 +228,6 @@ cron.schedule("10 11 14 * * *", () => {
 
 
 module.exports = {borrow: borrowNotifier, manual: manualNotifier, return: returnNotifier, register: registerNotifier,
-                    sportBorrow: sportBorrow, sportsReturn: sportsReturn
+                    sportBorrow: sportBorrow, sportsReturn: sportsReturn, spManual: sportsManualNotifier
                 };
 

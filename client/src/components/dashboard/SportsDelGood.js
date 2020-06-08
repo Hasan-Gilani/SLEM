@@ -42,7 +42,7 @@ class SportsDelGood extends Component{
     };
     makeCall = () => {
         return axios
-                // .delete(`/api/books/deleteBook/${this.state.goodID}`)
+                .delete(`/api/sports/delete/${this.state.goodID}`)
                 .then(response =>{ return response.data;})
                 .catch(error => { return error.response.data;});
     }
@@ -65,7 +65,7 @@ class SportsDelGood extends Component{
 
                     <div className="row ml-auto">
                         <div className="col-xs-2  p-2 block-example ml-auto">
-                            <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onDeletePress}>search</Button>
+                            <Button variant="primary" type = "button" className="fa fa-search" onClick={this.onDeletePress}>Remove</Button>
                         </div>
                         <div className="col-xs-2  p-2 block-example ">
                             <Button variant="light" type = "button" className="fa fa-undo">Reset</Button>

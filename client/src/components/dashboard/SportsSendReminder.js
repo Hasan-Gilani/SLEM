@@ -26,6 +26,7 @@ class SportsSendReminder extends Component{
         let arg = {id: this.state.studentid};
         this.makeCall(arg)
             .then(data => {
+                console.log(data);
                 if(data.error === true){
                     this.setState({
                         error: true,
@@ -42,7 +43,7 @@ class SportsSendReminder extends Component{
     }
     makeCall = arg => {
         return axios
-            // .post("/api/records/sendReminder", arg)
+            .post("/api/recordSports/sendReminder", arg)
             .then(res => {
                 return res.data;
             })

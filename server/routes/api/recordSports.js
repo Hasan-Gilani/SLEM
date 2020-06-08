@@ -6,7 +6,7 @@ const Sport = require("../../models/Sports")
 const Student = require("../../models/Students")
 const borrowNotifier = require("../api/mailer").sportBorrow;
 const returnNotifier = require("../api/mailer").sportsReturn
-const manualNotifier = require("../api/mailer").manual;
+const manualNotifier = require("../api/mailer").spManual
 
 validateLoanForm = arg => {
     let inputs = Object.keys(arg);
@@ -65,8 +65,9 @@ router.get("/find/:goodID", (req, res) => {
                     ans.totalAssignment = `This good has been assigned to ${records.length} individual(s)`;
                     records.forEach(record => {
                         ans[record.id] = {
-                            'Loaning Date': record.goods[0].bdate,
-                            'Return Date': record.goods[0].rdate
+                            'goodType': sportData.goodType,
+                            'Loaning Date': record.goods[0].bdate.toString().split(" GMT")[0],
+                            'Return Date': record.goods[0].rdate.toString().split(" GMT")[0]
                         };
                     });
                     ans.error = false;
@@ -221,26 +222,38 @@ router.post("/return", (req, res) => {
         .catch(err => { res.status(400).send(err);})
 });
 
-router.post("/sendsportReminder", (req, res) => {
-    SpRecord.findOne({ goodID: req.body.goodID })
+router.post("/sendReminder", (req, res) => {
+    SpRecord.findOne({ id: req.body.id })
         .then(record => {
             if (!record) {
                 throw { error: true, message: "No record exists against the given ID." }
             }
             else {
-                Student.findOne({ goodID: req.body.goodID }, { _id: 0, goodID: 0 })
+                Student.findOne({ id: req.body.id }, { _id: 0, id: 0 })
                     .then(student => {
-                        // let sent = manualNotifier(record.goodID, record.sports, student.fname + " " + student.lname, student.surcharge);
-                        // if (sent)
-                        //     return res.status(200).json({ error: false, message: `Mail Recipient Name: ${student.fname + " " + student.lname}.\nNotification Sent Successfully` });
-                        // else {
-                        //     res.status(400)
-                        //     res.send({ error: true, message: `Mail Could not be sent. Sorry` });
-                        // }
+                        if(!student)
+                            throw {error: true, message: "Sorry, student not found"}
+
+                        let sent = manualNotifier(student.id, record.goods,
+                            `${student.fname} + ${ student.lname}`,student.surcharge)
+                        sent
+                            .then(ans => {
+                                if(!ans)
+                                    throw {error: true, message: "Sorry, the mail could not be sent."}
+                                else{
+                                    res.status(200).send({
+                                        error: false,
+                                        message: `Reminder sent to ${student.fname} ${student.lname}`})
+                                }
+                            })
+                            .catch(err => {
+                                res.status(400).send(err)
+                            })
+
                     })
-                    .catch(() => {
+                    .catch((err) => {
                         res.status(400);
-                        res.send({ error: true, message: "Error while searching Student Record." });
+                        res.send(err);
                     });
             }
         })

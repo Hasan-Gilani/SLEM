@@ -56,7 +56,7 @@ router.post("/add", (req, res) => {
 
 router.delete("/delete/:goodID", (req, res) => {
     const deleted = req.params.goodID;
-    SpRecord.findOne({  goodID: req.params.goodID })
+    SpRecord.findOne({  "goods.goodID": req.params.goodID })
         .then(record => {
             if (record) {
                 throw { error: true, message: "Sorry, This Sport good is owned by some user(s). Cannot deleted it" }
@@ -75,6 +75,7 @@ router.delete("/delete/:goodID", (req, res) => {
                     .catch(err => res.status(400).send(err));
             }
         })
+        .catch(err => res.status(400).send(err));
 });
 
 router.get("/find/:id", (req, res) => {
