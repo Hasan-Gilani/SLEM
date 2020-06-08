@@ -160,4 +160,17 @@ router.delete("/removeStudent/:id", (req, res) => {
         .catch(err => res.status(400).send(err));
 })
 
+
+router.get("/fine/:id", (req, res) => {
+    Student.findOne({id: req.params.id})
+        .then(student => {
+            if(!student)
+                throw {error: true, message: "No such student exists"}
+            else{
+                res.status(200).send({message: `Current fine due is: ${student.surcharge}`})
+            }
+        })
+        .catch(err => res.status(400).send(err))
+})
+
 module.exports = router;
