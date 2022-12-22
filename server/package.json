@@ -18,7 +18,7 @@
     "concurrently": "^5.2.0",
     "express": "^4.16.4",
     "is-empty": "^1.2.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.3.11",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.8",
